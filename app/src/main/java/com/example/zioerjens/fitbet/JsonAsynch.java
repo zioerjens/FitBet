@@ -3,6 +3,7 @@ package com.example.zioerjens.fitbet;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,13 +24,26 @@ import java.util.List;
 
 public class JsonAsynch extends AsyncTask<String,String,String> {
 
-    private Activity teamAct;
-    private String url;
+    private TestJsonParse teamAct;
+    private String url2;
+    private ProgressDialog mDialog;
+    private ArrayAdapter laenderListe;
+
+    private String landName;
+    private String landId;
+    private String fifaCode;
+    private String flag;
+    private String emoji;
+    private String emojiString;
+    private String iso2;
+
+    private Land land;
 
 
-    public JsonAsynch(String url, Activity teamAct){
-        this.url = url;
+    public JsonAsynch(String url, TestJsonParse teamAct, ProgressDialog mDialog){
+        this.url2 = url;
         this.teamAct = teamAct;
+        this.mDialog = mDialog;
     }
 
 
@@ -52,31 +66,49 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
             while ((line = reader.readLine()) != null) {
                 msg.append(line);
             }
+            mDialog.dismiss();
 
 
         } catch (Exception e) {
-            //Log.v(BadiDetailsActivity.TAG, e.toString());
+            Log.v("Fehler", e.toString());
+            //throw e.getMessage();
         }
         return msg.toString();
     }
     protected void onPostExecute(String result) {
 
-
+        parseJson(result);
 
     }
 
     public void parseJson(String jsonstring){
-        ArrayAdapter ArrTeam = new ArrayAdapter<String>(teamAct, android.R.layout.simple_list_item_1);
+        laenderListe = teamAct.getLaenderListe();
         JSONObject jsonObj=null;
 
         try {
             jsonObj = new JSONObject(jsonstring);
 
-            JSONObject teams = jsonObj.getJSONObject("teams");
+
+            JSONArray jArr = jsonObj.getJSONArray("teams");
+            for(int i =0; i<jArr.length();i++){
+                JSONObject subObj = jArr.getJSONObject(i);
+                landId=subObj.getString("id");
+                landName=subObj.getString("name");
+                fifaCode=subObj.getString("fifaCode");
+                iso2=subObj.getString("iso2");
+                flag=subObj.getString("flag");
+                emoji=subObj.getString("emoji");
+                emojiString=subObj.getString("emojiString");
+                land = new Land(landName,landId,fifaCode,flag,emoji,emojiString,iso2);
+                laenderListe.add(land);
+            }
+
         }
         catch (JSONException e){
             e.printStackTrace();
         }
+        //ArrTeam.add("Dini Mueter");
+
     }
 
 

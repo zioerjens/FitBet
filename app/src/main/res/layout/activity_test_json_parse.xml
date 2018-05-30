@@ -22,14 +22,13 @@
         android:layout_weight="0"
         android:text="Teams" />
 
+
     <ListView
+        android:id="@+id/spielL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/teamL"
         android:layout_gravity="bottom"
-        android:layout_weight="0"
-        >
-
+        android:layout_weight="0">
     </ListView>
 
 

@@ -14,6 +14,8 @@ public class TestJsonParse extends AppCompatActivity {
     private ProgressDialog mDialog;
 
     private ArrayAdapter laenderListe;
+    private ArrayAdapter spieleListe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +27,20 @@ public class TestJsonParse extends AppCompatActivity {
         JsonAsynch jsonAsynch = new JsonAsynch(url,testA,mDialog);
         jsonAsynch.execute(url);
 
-        ListView laender = (ListView) findViewById(R.id.teamL);
+        //ListView laender = (ListView) findViewById(R.id.teamL);
+        ListView spiele = (ListView) findViewById(R.id.spielL);
         laenderListe = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        laender.setAdapter(laenderListe);
+        spieleListe = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+
+
+        //laender.setAdapter(laenderListe);
+        spiele.setAdapter(spieleListe);
     }
 
     public ArrayAdapter getLaenderListe() {
         return laenderListe;
+    }
+    public ArrayAdapter getSpieleListe() {
+        return spieleListe;
     }
 }

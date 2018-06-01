@@ -154,6 +154,10 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
                     awayTeam = subSubObj.getString("away_team");
                     awayResult = subSubObj.getString("away_result");
                     homeResult = subSubObj.getString("home_result");
+                    if(awayResult=="null"){
+                        awayResult="-";
+                        homeResult="-";
+                    }
                     spiel = new Spiele(homeTeam, awayTeam, homeResult, awayResult, teamAct);
                     spieleListe.add(spiel);
                     spieleList.add(spiel);

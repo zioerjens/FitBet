@@ -23,7 +23,17 @@
                 android:layout_width="150dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true">
+                android:layout_alignParentTop="true"
+                android:layout_margin="5dp"
+                android:background="@color/backStat">
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/rounded_border" />
 
                 <TextView
                     android:id="@+id/stat_land_home_name"
@@ -46,9 +56,10 @@
                     android:id="@+id/stat_land_home_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:text="TextView" />
+                    android:layout_marginTop="33dp"
+                    android:layout_marginStart="26dp"
+                    android:textColor="@color/backStat"
+                    android:text="-" />
 
                 <TextView
                     android:id="@+id/stat_land_away_result"
@@ -57,6 +68,8 @@
                     android:layout_alignStart="@+id/stat_land_away_name"
                     android:layout_centerVertical="true"
                     android:text="TextView" />
+
+
 
             </RelativeLayout>
 

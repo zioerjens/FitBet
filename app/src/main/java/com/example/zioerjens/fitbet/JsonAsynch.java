@@ -50,16 +50,24 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
     private String finished;
     private String matchday;
 
+    private ListView listView;
+    private SpieleAdapter spieleAdapter;
 
 
     private Spiele spiel;
     private Land land;
 
 
+
+
+
+
     public JsonAsynch(String url, TestJsonParse teamAct, ProgressDialog mDialog){
         this.url2 = url;
         this.teamAct = teamAct;
         this.mDialog = mDialog;
+
+
     }
 
 
@@ -129,30 +137,41 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
     }
     public void parseJsonSpiel(String jsonstring){
         spieleListe = teamAct.getSpieleListe();
+        ArrayList<Spiele> spieleList = new ArrayList<>();
         JSONObject jsonObject=null;
         try{
             jsonObject = new JSONObject(jsonstring);
 
-            //JSONArray jArr = jsonObject.getJSONArray("groups");
+
             JSONObject gr = jsonObject.getJSONObject("groups");
 
-            for(char i ='a'; i<'h';i++) {
+            for(char i ='a'; i<='h';i++) {
                 JSONObject subObj = gr.getJSONObject(i+"");
                 JSONArray subjArr = subObj.getJSONArray("matches");
                 for (int j = 0; j < subjArr.length(); j++) {
                     JSONObject subSubObj = subjArr.getJSONObject(j);
                     homeTeam = subSubObj.getString("home_team");
                     awayTeam = subSubObj.getString("away_team");
-                    spiel = new Spiele(homeTeam, awayTeam,teamAct);
+                    awayResult = subSubObj.getString("away_result");
+                    homeResult = subSubObj.getString("home_result");
+                    spiel = new Spiele(homeTeam, awayTeam, homeResult, awayResult, teamAct);
                     spieleListe.add(spiel);
+                    spieleList.add(spiel);
                 }
             }
+
+            listView = (ListView) teamAct.findViewById(R.id.spielL);
+
+            //spieleList.add(new Spiele("Deutschland", "Frankreich"));
+            //spieleList.add(new Spiele("Deutschland", "Frankreich"));
+
+            spieleAdapter = new SpieleAdapter(teamAct,spieleList);
+            listView.setAdapter(spieleAdapter);
         }
 
         catch (JSONException e) {
             e.printStackTrace();
         }
     }
-
 
 }

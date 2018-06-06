@@ -18,5 +18,6 @@
     <string name="txtPoints">Points</string>
     <string name="txtResTippR">Richtig getippt</string>
     <string name="txtResTippF">Falsch getippt</string>
+    <string name="titelStat">Statistik von</string>
 
 </resources>

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class TestJsonParse extends AppCompatActivity {
 
     private ListView listView;
     private SpieleAdapter spieleAdapter;
+    private RelativeLayout resultBar;
 
 
 
@@ -39,6 +41,8 @@ public class TestJsonParse extends AppCompatActivity {
 
         JsonAsynch jsonAsynch = new JsonAsynch(url,testA,mDialog);
         jsonAsynch.execute(url);
+
+
 
 
         laenderListe = new ArrayAdapter<Land>(this, android.R.layout.simple_list_item_1);

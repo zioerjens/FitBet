@@ -10,7 +10,7 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Intent sportIntent = new Intent(getApplicationContext(),Sport.class);
+        Intent sportIntent = new Intent(getApplicationContext(),Register.class);
         startActivity(sportIntent);
     }
 }

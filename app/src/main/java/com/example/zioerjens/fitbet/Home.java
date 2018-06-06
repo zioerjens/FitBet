@@ -46,5 +46,13 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        final Button buttonLogin = findViewById(R.id.btnSignIn);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),SignIn.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

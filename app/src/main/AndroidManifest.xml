@@ -32,9 +32,10 @@
             android:name=".tippen_Spielauswahl"
             android:label="@string/title_activity_tippen__spielauswahl"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Gruppenauswahl"></activity>
-            android:label="@string/title_activity_login" />
-        <activity android:name=".Sport"></activity>
+        <activity android:name=".Gruppenauswahl" />
+        android:label="@string/title_activity_login" />
+        <activity android:name=".Sport" />
+        <activity android:name=".SignIn"></activity>
     </application>
 
 </manifest>

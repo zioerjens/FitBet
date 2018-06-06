@@ -22,7 +22,15 @@
         android:layout_weight="0"
         android:text="Teams" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/backGrStat"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        >
 
+    </RelativeLayout>
     <ListView
         android:id="@+id/spielL"
         android:layout_width="match_parent"
@@ -30,6 +38,7 @@
         android:layout_gravity="bottom"
         android:layout_weight="0">
     </ListView>
+
 
 
 </LinearLayout>

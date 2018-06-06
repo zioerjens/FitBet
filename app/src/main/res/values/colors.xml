@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="backStat">#ececec</color>
+    <color name="backGrStat">#3977a8</color>
 </resources>

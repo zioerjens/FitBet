@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="83dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_margin="1dp">
 
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="80dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="@color/colorAccent"
-            android:orientation="vertical">
+            android:background="@color/backGrStat"
+            android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="150dp"
+                android:layout_width="115dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
@@ -35,12 +37,22 @@
                     android:layout_marginTop="25dp"
                     android:background="@drawable/rounded_border" />
 
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_alignStart="@+id/stat_land_away_name"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/rounded_border" />
+
                 <TextView
                     android:id="@+id/stat_land_home_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_marginStart="3dp"
                     android:text="TextView" />
 
                 <TextView
@@ -49,28 +61,109 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginEnd="18dp"
+                    android:layout_marginEnd="8dp"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/stat_land_home_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="33dp"
                     android:layout_marginStart="26dp"
-                    android:textColor="@color/backStat"
-                    android:text="-" />
+                    android:layout_marginTop="33dp"
+                    android:text="-"
+                    android:textColor="@color/backStat" />
 
                 <TextView
                     android:id="@+id/stat_land_away_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/stat_land_away_name"
-                    android:layout_centerVertical="true"
-                    android:text="TextView" />
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="33dp"
+                    android:text="-"
+                    android:textColor="@color/backStat" />
 
 
 
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+
+                android:layout_width="110dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@color/backStat">
+
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/rounded_border" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/rounded_border" />
+
+                <TextView
+                    android:id="@+id/uebTipp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/uebTipp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/backStat">
+
+
+                <TextView
+                    android:id="@+id/numberPoints"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="10"
+                    android:textSize="30dp"/>
+
+                <TextView
+                    android:id="@+id/txtTippUeb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/txtResTippR"
+                    android:textSize="10dp"/>
+
+                <TextView
+                    android:id="@+id/txtPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:text="@string/txtPoints" />
             </RelativeLayout>
 
         </LinearLayout>

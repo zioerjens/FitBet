@@ -40,21 +40,12 @@ public class TestJsonParse extends AppCompatActivity {
         JsonAsynch jsonAsynch = new JsonAsynch(url,testA,mDialog);
         jsonAsynch.execute(url);
 
-        //ListView laender = (ListView) findViewById(R.id.teamL);
-        //ListView spiele = (ListView) findViewById(R.id.spielL);
-        laenderListe = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        spieleListe = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
-        //spiele.setAdapter(spieleListe);
+        laenderListe = new ArrayAdapter<Land>(this, android.R.layout.simple_list_item_1);
+        spieleListe = new ArrayAdapter<Spiele>(this, android.R.layout.simple_list_item_1);
 
 
-        /*listView = (ListView) findViewById(R.id.spielL);
-        ArrayList<Spiele> spieleList = new ArrayList<>();
-        spieleList.add(new Spiele("Deutschland", "Frankreich"));
-        spieleList.add(new Spiele("Deutschland", "Frankreich"));
 
-        spieleAdapter = new SpieleAdapter(this,spieleList);
-        listView.setAdapter(spieleAdapter);*/
 
     }
 

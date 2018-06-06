@@ -31,7 +31,8 @@
         <activity
             android:name=".tippen_Spielauswahl"
             android:label="@string/title_activity_tippen__spielauswahl"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Gruppenauswahl"></activity>
     </application>
 
 </manifest>

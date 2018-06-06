@@ -165,10 +165,6 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
             }
 
             listView = (ListView) teamAct.findViewById(R.id.spielL);
-
-            //spieleList.add(new Spiele("Deutschland", "Frankreich"));
-            //spieleList.add(new Spiele("Deutschland", "Frankreich"));
-
             spieleAdapter = new SpieleAdapter(teamAct,spieleList);
             listView.setAdapter(spieleAdapter);
         }

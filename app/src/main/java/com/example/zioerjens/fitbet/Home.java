@@ -30,5 +30,13 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        final Button buttonGruppen = findViewById(R.id.btnGruppen);
+        buttonGruppen.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Gruppenauswahl.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

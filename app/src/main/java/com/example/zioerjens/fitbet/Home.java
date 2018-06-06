@@ -38,5 +38,13 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        final Button buttonSport = findViewById(R.id.btnSport);
+        buttonSport.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Sport.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

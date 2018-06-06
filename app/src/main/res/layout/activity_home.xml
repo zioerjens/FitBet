@@ -1,18 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Home">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="4dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="4dp"
+    tools:context=".TestJsonParse"
+    android:orientation="vertical"
 
-    <TextView
+    android:id="@+id/layout"
+    >
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center">
+
+    <Button
+        android:id="@+id/btnGruppen"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@color/backStat"
+        android:layout_margin="4dp"
+        android:text="@string/btnGruppen">
+
+    </Button>
+    <Button
+        android:id="@+id/Tippen"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@color/backStat"
+        android:layout_margin="4dp"
+        android:text="@string/btnTippen">
+
+    </Button>
+
+</LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/btnStatistik"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@color/backStat"
+            android:layout_margin="4dp"
+            android:text="@string/btnStatistik">
+
+        </Button>
+        <Button
+            android:id="@+id/btnSport"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@color/backStat"
+            android:layout_margin="4dp"
+            android:text="@string/btnSport">
+
+        </Button>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
+
+

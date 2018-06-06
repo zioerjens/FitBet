@@ -20,4 +20,12 @@
     <string name="txtResTippF">Falsch getippt</string>
     <string name="titelStat">Statistik von</string>
 
+    <string name="btnGruppen">Gruppen</string>
+    <string name="btnTippen">Tippen</string>
+    <string name="btnStatistik">Statistik</string>
+    <string name="btnSport">Sport</string>
+
+
+
+
 </resources>

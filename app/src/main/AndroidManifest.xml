@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -33,6 +32,8 @@
             android:label="@string/title_activity_tippen__spielauswahl"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Gruppenauswahl"></activity>
+            android:label="@string/title_activity_login" />
+        <activity android:name=".Sport"></activity>
     </application>
 
 </manifest>

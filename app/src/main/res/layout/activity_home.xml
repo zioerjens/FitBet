@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="4dp"
     android:paddingLeft="4dp"
     android:paddingRight="4dp"
     android:paddingTop="4dp"
     tools:context=".TestJsonParse"
     android:orientation="vertical"
+    android:layout_gravity="center"
 
     android:id="@+id/layout"
     >
@@ -25,16 +26,19 @@
         android:layout_height="150dp"
         android:background="@color/backStat"
         android:layout_margin="4dp"
-        android:text="@string/btnGruppen">
+        android:text="@string/btnGruppen"
+        android:drawableTop="@drawable/pic_gruppen"
+        >
 
     </Button>
     <Button
-        android:id="@+id/Tippen"
+        android:id="@+id/btnTippen"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:background="@color/backStat"
         android:layout_margin="4dp"
-        android:text="@string/btnTippen">
+        android:text="@string/btnTippen"
+        android:drawableTop="@drawable/pic_tippen">
 
     </Button>
 
@@ -52,7 +56,9 @@
             android:layout_height="150dp"
             android:background="@color/backStat"
             android:layout_margin="4dp"
-            android:text="@string/btnStatistik">
+            android:text="@string/btnStatistik"
+            android:drawableTop="@drawable/pic_statistik"
+            >
 
         </Button>
         <Button
@@ -61,7 +67,8 @@
             android:layout_height="150dp"
             android:background="@color/backStat"
             android:layout_margin="4dp"
-            android:text="@string/btnSport">
+            android:text="@string/btnSport"
+            android:drawableTop="@drawable/pic_sport">
 
         </Button>
 

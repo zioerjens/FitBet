@@ -24,8 +24,12 @@
     <string name="btnTippen">Tippen</string>
     <string name="btnStatistik">Statistik</string>
     <string name="btnSport">Sport</string>
-
-
+    <string name="title_activity_tippen__spielauswahl">tippen_Spielauswahl</string>
+    <string name="tab_text_1">Datum</string>
+    <string name="tab_text_2">Gruppe</string>
+    <string name="tab_text_3">Land</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 
 </resources>

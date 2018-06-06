@@ -14,10 +14,18 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        final Button button = findViewById(R.id.btnStatistik);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button buttonStat = findViewById(R.id.btnStatistik);
+        buttonStat.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),TestJsonParse.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button buttonTippen = findViewById(R.id.btnTippen);
+        buttonTippen.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),tippen_Spielauswahl.class);
                 startActivity(intent);
             }
         });

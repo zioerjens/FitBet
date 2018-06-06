@@ -25,8 +25,13 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" />
-        <activity android:name=".TestJsonParse"
-            android:label="@string/titelStat"></activity>
+        <activity
+            android:name=".TestJsonParse"
+            android:label="@string/titelStat" />
+        <activity
+            android:name=".tippen_Spielauswahl"
+            android:label="@string/title_activity_tippen__spielauswahl"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

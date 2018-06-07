@@ -75,15 +75,15 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnSignIn"
+        android:id="@+id/btnLogout"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:background="@color/backStat"
         android:layout_margin="4dp"
-        android:text="@string/register"
+        android:text="@string/sign_out"
         android:layout_gravity="center">
-
     </Button>
+
 
 </LinearLayout>
 

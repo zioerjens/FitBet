@@ -37,6 +37,16 @@
     <string name="password_repeat">Repeat Password</string>
     <string name="register">Register</string>
     <string name="login_page">Login-Page</string>
+    <string name="btnGrErstellen">Gruppe erstellen</string>
+    <string name="btnGrBeitreten">Gruppe beitreten</string>
+
+    <string name="titelActGr">Gruppen</string>
+    <string name="titelActNewGr">Gruppe erstellen</string>
+
+    <string name="inputNewGroupName">Name</string>
+    <string name="inputNewGoupPassword">Passwort</string>
+
+    <string name="sign_out">Logout</string>
 
     <!-- Strings related to sport -->
     <string name="multiplikatorScore">1,3x</string>

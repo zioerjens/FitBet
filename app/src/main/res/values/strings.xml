@@ -46,5 +46,6 @@
     <string name="inputNewGroupName">Name</string>
     <string name="inputNewGoupPassword">Passwort</string>
 
+    <string name="sign_out">Logout</string>
 
 </resources>

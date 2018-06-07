@@ -31,5 +31,14 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
+    <string name="btnGrErstellen">Gruppe erstellen</string>
+    <string name="btnGrBeitreten">Gruppe beitreten</string>
+
+    <string name="titelActGr">Gruppen</string>
+    <string name="titelActNewGr">Gruppe erstellen</string>
+
+    <string name="inputNewGroupName">Name</string>
+    <string name="inputNewGoupPassword">Passwort</string>
+
 
 </resources>

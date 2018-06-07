@@ -2,7 +2,7 @@ package com.example.zioerjens.fitbet;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-public class Account {
+public class    Account {
 
     private static GoogleSignInAccount instance;
 

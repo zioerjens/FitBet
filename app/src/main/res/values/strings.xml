@@ -38,4 +38,12 @@
     <string name="register">Register</string>
     <string name="login_page">Login-Page</string>
 
+    <!-- Strings related to sport -->
+    <string name="multiplikatorScore">1,3x</string>
+    <string name="multiplikatorText">Multiplikator</string>
+    <string name="sportPic">Running</string>
+    <string name="upwardSlope">UpwardSlope</string>
+    <string name="upwardSlopeAmmount">"0</string>
+    <string name="distance">Distance</string>
+    <string name="distanceAmmount">"0</string>
 </resources>

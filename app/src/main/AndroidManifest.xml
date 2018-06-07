@@ -35,12 +35,15 @@
         <activity
             android:name=".Gruppenauswahl"
             android:label="@string/titelActGr" />
-        <activity android:name=".Sport" />
+
         <activity
             android:name=".newGroupAct"
             android:theme="@style/AppTheme.PopUpGroup"
             android:label="@string/titelActNewGr"
             ></activity>
+
+        <activity android:name=".Sport" />
+        <activity android:name=".SignIn"></activity>
     </application>
 
 </manifest>

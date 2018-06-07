@@ -35,7 +35,8 @@
         <activity android:name=".Gruppenauswahl" />
         android:label="@string/title_activity_login" />
         <activity android:name=".Sport" />
-        <activity android:name=".SignIn"></activity>
+        <activity android:name=".SignIn"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

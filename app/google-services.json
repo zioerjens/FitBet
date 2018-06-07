@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "315403709673",
+    "firebase_url": "https://fitbet-69.firebaseio.com",
+    "project_id": "fitbet-69",
+    "storage_bucket": "fitbet-69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315403709673:android:e1d90671302217b6",
+        "android_client_info": {
+          "package_name": "com.example.zioerjens.fitbet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315403709673-a0aclbl6m1hfaa295101coj7he8b72qf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zioerjens.fitbet",
+            "certificate_hash": "ceb407dde9d5fb572529b2c1aecf79ef025d4f4a"
+          }
+        },
+        {
+          "client_id": "315403709673-fg406macr0u40tm1nnss0cmiion3eljc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zioerjens.fitbet",
+            "certificate_hash": "e4dbeeca110694e4f920c047615fe3faa6ada113"
+          }
+        },
+        {
+          "client_id": "315403709673-p30g8m3ivc50b7ls0dbk51bh2ddaap3g.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "315403709673-p30g8m3ivc50b7ls0dbk51bh2ddaap3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-UupYboKIA0eYrFNoQiwgdr2c8ZwQat0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315403709673-p30g8m3ivc50b7ls0dbk51bh2ddaap3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

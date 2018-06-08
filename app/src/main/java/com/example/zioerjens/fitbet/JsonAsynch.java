@@ -108,7 +108,7 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
         parseJsonSpiel(result);
 
     }
-
+    //Liest die Länder aus dem JSON und speichert diese als Land-Objekt Arryadapter
     public void parseJsonLoadLand(String jsonstring){
         laenderListe = teamAct.getLaenderListe();
         JSONObject jsonObj=null;
@@ -138,16 +138,17 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
 
 
     }
+    //Liest alle Spiele aus dem JSON, speichert sie und zeit alle Spiele in der Statistik-Activity
     public void parseJsonSpiel(String jsonstring){
         spieleListe = teamAct.getSpieleListe();
+
+        //Diese ArrayList braucht es, damit sie dem Spieladapter übergeben werden kann
         ArrayList<Spiele> spieleList = new ArrayList<>();
         JSONObject jsonObject=null;
         try{
             jsonObject = new JSONObject(jsonstring);
-
-
             JSONObject gr = jsonObject.getJSONObject("groups");
-
+            //Auslesen der Gruppenspiele
             for(char i ='a'; i<='h';i++) {
                 JSONObject subObj = gr.getJSONObject(i+"");
                 JSONArray subjArr = subObj.getJSONArray("matches");
@@ -163,10 +164,13 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
                         homeResult="-";
                     }
                     spiel = new Spiele(homeTeam, awayTeam, homeResult, awayResult, spielName,teamAct);
-                    spieleListe.add(spiel);
-                    spieleList.add(spiel);
+                    spieleListe.add(spiel); //Arrayadatper
+                    spieleList.add(spiel);  //ArrayList
                 }
             }
+
+            //Auslesen der Knockoutspiele
+
             ArrayList<String> strKnockName = new ArrayList<String>();
             strKnockName.add("round_16");
             strKnockName.add("round_8");
@@ -180,6 +184,7 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
             for (String s : strKnockName) {
                 JSONObject subObj = knockout.getJSONObject(s);
                 JSONArray subjArr = subObj.getJSONArray("matches");
+                //1/8-Final
                 if(s=="round_16") {
                     for (int i = 0; i < subjArr.length(); i++) {
                         JSONObject subSubObj = subjArr.getJSONObject(i);
@@ -196,6 +201,7 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
                         spieleList.add(spiel);
                     }
                 }
+                //Restliche Knockoutspiele
                 else{
                     for (int i = 0; i < subjArr.length(); i++) {
                         JSONObject subSubObj = subjArr.getJSONObject(i);
@@ -219,9 +225,8 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
 
 
 
-
+            //Die Custom-View wird der Listview angehängt
             listView = (ListView) teamAct.findViewById(R.id.spielL);
-            listView.setBackgroundColor(1);
             spieleAdapter = new SpieleAdapter(teamAct,spieleList);
             listView.setAdapter(spieleAdapter);
         }
@@ -232,7 +237,7 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
     }
 
 
-
+    //Liest den Gewinner des vorherigen der 1/8,1/4,1/2-Finale
     private void selectWinner(ArrayList<Spiele> spieleList){
         switch (spielName){
             case "57":
@@ -296,7 +301,7 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
                 break;
         }
     }
-
+    //Setzt den Namen des Home und Away-Teams des Spieles.
     private void winnerIDtoName(String winnerN,int spielId,ArrayList<Spiele> spieleList,Boolean homeTeam){
         if(homeTeam){
             if(winnerN=="home"){

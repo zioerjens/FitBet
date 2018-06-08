@@ -20,11 +20,10 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1"
         android:text="Datum"/>
-    <EditText
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Date"
-        android:clickable="true"
-        android:inputType="none" />
+        android:id="@+id/selectDateBtn"
+        android:focusable="false"/>
 
 </android.support.constraint.ConstraintLayout>

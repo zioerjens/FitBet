@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Home extends AppCompatActivity {
 
@@ -68,7 +69,8 @@ public class Home extends AppCompatActivity {
     }
 
     private void checkLoggedIn(){
-        if (GoogleSignIn.getLastSignedInAccount(this) == null){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() == null){
             Intent intent = new Intent(getApplicationContext(),SignIn.class);
             startActivity(intent);
             finish();
@@ -84,6 +86,8 @@ public class Home extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        mAuth.signOut();
                         Intent intent = new Intent(getApplicationContext(),SignIn.class);
                         startActivity(intent);
                         finish();

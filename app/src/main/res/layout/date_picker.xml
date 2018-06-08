@@ -4,13 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-
     tools:context=".Gruppenauswahl"
     android:orientation="vertical"
-
     android:id="@+id/gruppenauswahl"
     >
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -24,32 +21,13 @@
             android:gravity="center|bottom"
             android:background="@color/colorPrimary">
 
-            <Button
-                android:id="@+id/btnGrBeitreten"
-                android:layout_width="150dp"
+            <DatePicker
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="19dp"
-                android:text="@string/btnGrBeitreten" />
-
-            <Button
-                android:id="@+id/btnGrErstellen"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="19dp"
-                android:text="@string/btnGrErstellen" />
+                android:id="@+id/datePicker" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
 </LinearLayout>
-
-

@@ -173,5 +173,4 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
             e.printStackTrace();
         }
     }
-
 }

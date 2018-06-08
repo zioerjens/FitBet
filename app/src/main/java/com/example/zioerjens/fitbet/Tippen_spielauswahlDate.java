@@ -1,19 +1,37 @@
 package com.example.zioerjens.fitbet;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 //import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Tippen_spielauswahlDate extends Fragment {
+
+    private View activity;
+    public Button pickDateBtn;
+    private Calendar selectedDate;
+    private DatePicker datePicker;
+    private FragmentActivity myContext;
 
     @Nullable
     @Override
@@ -22,36 +40,78 @@ public class Tippen_spielauswahlDate extends Fragment {
         return rootView;
     }
 
+    public void showDialogOnEditTextClick() {
+        pickDateBtn = (Button) activity.findViewById(R.id.selectDateBtn);
+
+        pickDateBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onClick(View v) {
+
+                        DialogFragment newFragmentDate = new DatePickerFragment();
+                        newFragmentDate.show(myContext.getFragmentManager(), "datePicker");
+
+/*
+                        AlertDialog.Builder mBuilder = new AlertDialog.Builder(activity.getContext());
+                        View mView = getLayoutInflater().inflate(R.layout.date_picker,null);
+                        mBuilder.setView(mView);
+                        AlertDialog dialog = mBuilder.create();
+                        dialog.show();
+                        datePicker = dialog.findViewById(R.id.datePicker);
+                        /*
+                        datePicker.setOnDateChangedListener(
+                                new DatePicker.OnDateChangedListener() {
+                                    @Override
+                                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                        year = datePicker.getYear();
+                                        month = datePicker.getMonth();
+                                        day = datePicker.getDayOfMonth();
+                                    }
+                                }
+                        );*/
+                    }
+                }
+        );
+    }
+
     @Override
     public void onStart() {
 
         super.onStart();
-        Calendar myCalendar = Calendar.getInstance();
-/*
-        EditText edittext= (EditText) findViewById(R.id.Birthday);
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        activity = this.getView();
+        selectedDate  = Calendar.getInstance();
+        showDialogOnEditTextClick();
+    }
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
+    @Override
+    public void onAttach(Activity activity) {
+        myContext=(FragmentActivity) activity;
+        super.onAttach(activity);
+    }
 
-        };
 
-        edittext.setOnClickListener(new View.OnClickListener() {
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(classname.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });*/
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            Log.e("date",year + "-" + month + "-" + day);
+        }
+    }
+
+    public void loadMatches(){
+        //TODO spiele für das besimmte Datum einfügen.
     }
 }

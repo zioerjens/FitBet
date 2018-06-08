@@ -16,6 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -64,7 +67,6 @@ public class Sport extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        //ToDO insertMultiplier() + insertActualProgress
     }
 
     private void checkLocPermission(){
@@ -111,8 +113,7 @@ public class Sport extends AppCompatActivity {
     }
 
     private void calcMultiplier(){
-        int requirement = 10;
-        double progress;
+        int requirement = 50;
         if(distance>requirement){
 
             int counter = (int) (distance / requirement );
@@ -165,7 +166,7 @@ public class Sport extends AppCompatActivity {
 
     public void onStartClicked() {
         try {
-            locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0.1f, locList);
+            locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, locList);
         }
         catch(SecurityException e){
             Log.v("Location Permission err",e.getMessage());
@@ -184,8 +185,16 @@ public class Sport extends AppCompatActivity {
         final TextView tvUp = findViewById(R.id.upwardSlope);
         tvUp.setText("Upward slope");
         t.show();
+
+        insertIntoFirebase();
     }
 
-
+    public void insertIntoFirebase(){
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ref = db.getReference("sportler");
+        DatabaseReference sportsRef = ref.push();
+        SportData sd = new SportData(distance,multiplier);
+        sportsRef.setValue(sd);
+    }
 
 }

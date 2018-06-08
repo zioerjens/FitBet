@@ -44,8 +44,8 @@ public class Gruppenauswahl extends AppCompatActivity {
                         Gruppe g = new Gruppe(mName.getText().toString(),mPassword.getText().toString());
                         //usersRef.child("gruppe").setValue(g);
                         usersRef.setValue(g);
-                        String a=Account.getAccount().getId();
-                        Log.e("bababdi",a);
+                        //String a=Account.getAccount().getId();
+                        //Log.e("bababdi",a);
                         dialog.dismiss();
 
 

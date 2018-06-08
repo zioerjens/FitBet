@@ -49,6 +49,9 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
     private String stadium;
     private String finished;
     private String matchday;
+    private String winner;
+    private String homePenalty;
+    private String awayPenalty;
 
     private ListView listView;
     private SpieleAdapter spieleAdapter;
@@ -154,17 +157,71 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
                     awayTeam = subSubObj.getString("away_team");
                     awayResult = subSubObj.getString("away_result");
                     homeResult = subSubObj.getString("home_result");
+                    spielName = subSubObj.getString("name");
                     if(awayResult=="null"){
                         awayResult="-";
                         homeResult="-";
                     }
-                    spiel = new Spiele(homeTeam, awayTeam, homeResult, awayResult, teamAct);
+                    spiel = new Spiele(homeTeam, awayTeam, homeResult, awayResult, spielName,teamAct);
                     spieleListe.add(spiel);
                     spieleList.add(spiel);
                 }
             }
+            ArrayList<String> strKnockName = new ArrayList<String>();
+            strKnockName.add("round_16");
+            strKnockName.add("round_8");
+            strKnockName.add("round_4");
+            strKnockName.add("round_2_loser");
+            strKnockName.add("round_2");
+
+
+            JSONObject knockout = jsonObject.getJSONObject("knockout");
+
+            for (String s : strKnockName) {
+                JSONObject subObj = knockout.getJSONObject(s);
+                JSONArray subjArr = subObj.getJSONArray("matches");
+                if(s=="round_16") {
+                    for (int i = 0; i < subjArr.length(); i++) {
+                        JSONObject subSubObj = subjArr.getJSONObject(i);
+                        homeTeam = subSubObj.getString("home_team");
+                        awayTeam = subSubObj.getString("away_team");
+                        awayResult = subSubObj.getString("away_result");
+                        homeResult = subSubObj.getString("home_result");
+                        spielName = subSubObj.getString("name");
+                        homePenalty = subSubObj.getString("home_penalty");
+                        awayPenalty = subSubObj.getString("away_penalty");
+                        winner = subSubObj.getString("winner");
+                        spiel = new Spiele(homeTeam, awayTeam, homeResult, awayResult ,homePenalty, awayPenalty,spielName,winner,teamAct);
+                        spieleListe.add(spiel);
+                        spieleList.add(spiel);
+                    }
+                }
+                else{
+                    for (int i = 0; i < subjArr.length(); i++) {
+                        JSONObject subSubObj = subjArr.getJSONObject(i);
+                        homeTeam = subSubObj.getString("home_team");
+                        awayTeam = subSubObj.getString("away_team");
+                        awayResult = subSubObj.getString("away_result");
+                        homeResult = subSubObj.getString("home_result");
+                        spielName = subSubObj.getString("name");
+                        homePenalty = subSubObj.getString("home_penalty");
+                        awayPenalty = subSubObj.getString("away_penalty");
+                        winner = subSubObj.getString("winner");
+                        selectWinner(spieleList);
+                        spiel = new Spiele(homeTeam, awayTeam, homeResult, awayResult ,homePenalty, awayPenalty,spielName,winner,teamAct);
+                        spieleListe.add(spiel);
+                        spieleList.add(spiel);
+                    }
+
+                }
+
+            }
+
+
+
 
             listView = (ListView) teamAct.findViewById(R.id.spielL);
+            listView.setBackgroundColor(1);
             spieleAdapter = new SpieleAdapter(teamAct,spieleList);
             listView.setAdapter(spieleAdapter);
         }
@@ -174,4 +231,87 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
         }
     }
 
-}
+
+
+    private void selectWinner(ArrayList<Spiele> spieleList){
+        switch (spielName){
+            case "57":
+                String winner1 = spieleList.get(48).winner;
+                winnerIDtoName(winner1,48,spieleList,true);
+                String winner2 = spieleList.get(49).winner;
+                winnerIDtoName(winner2,49,spieleList,false);
+                break;
+            case "58":
+                String winner3 = spieleList.get(52).winner;
+                winnerIDtoName(winner3,52,spieleList,true);
+                String winner4 = spieleList.get(53).winner;
+                winnerIDtoName(winner4,53,spieleList,false);
+                break;
+            case "59":
+                String winner6 = spieleList.get(50).winner;
+                winnerIDtoName(winner6,50,spieleList,true);
+                String winner7 = spieleList.get(51).winner;
+                winnerIDtoName(winner7,51,spieleList,false);
+                break;
+            case "60":
+                String winner8 = spieleList.get(54).winner;
+                winnerIDtoName(winner8,54,spieleList,true);
+                String winner9 = spieleList.get(55).winner;
+                winnerIDtoName(winner9,55,spieleList,false);
+                break;
+            case "61":
+                String winner10 = spieleList.get(56).winner;
+                winnerIDtoName(winner10,56,spieleList,true);
+                String winner11 = spieleList.get(57).winner;
+                winnerIDtoName(winner11,57,spieleList,false);
+                break;
+            case "62":
+                String winner12 = spieleList.get(58).winner;
+                winnerIDtoName(winner12,58,spieleList,true);
+                String winner13 = spieleList.get(59).winner;
+                winnerIDtoName(winner13,59,spieleList,false);
+                break;
+            case "63":
+                String looser1 = spieleList.get(60).winner;
+                if(looser1=="home"){
+                    this.homeTeam=spieleList.get(60).awayTeam;
+                }
+                else{
+                    this.homeTeam=spieleList.get(60).homeTeam;
+                }
+                String looser2 = spieleList.get(61).winner;
+                if(looser2=="home"){
+                    this.awayTeam=spieleList.get(61).awayTeam;
+                }
+                else{
+                    this.awayTeam=spieleList.get(61).homeTeam;
+                }
+
+                break;
+            case  "64":
+                String winner16 = spieleList.get(60).winner;
+                winnerIDtoName(winner16,60,spieleList,true);
+                String winner17 = spieleList.get(61).winner;
+                winnerIDtoName(winner17,61,spieleList,false);
+                break;
+        }
+    }
+
+    private void winnerIDtoName(String winnerN,int spielId,ArrayList<Spiele> spieleList,Boolean homeTeam){
+        if(homeTeam){
+            if(winnerN=="home"){
+                this.homeTeam=spieleList.get(spielId).homeTeam;
+            }
+            else{
+                this.homeTeam=spieleList.get(spielId).awayTeam;
+            }
+        }
+        else {
+            if(winnerN=="home"){
+                this.awayTeam=spieleList.get(spielId).homeTeam;
+            }
+            else{
+                this.awayTeam=spieleList.get(spielId).awayTeam;
+            }
+        }
+}}

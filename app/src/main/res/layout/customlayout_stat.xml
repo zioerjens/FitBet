@@ -20,7 +20,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:background="@color/backGrStat"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/llback">
 
             <RelativeLayout
                 android:layout_width="115dp"
@@ -54,7 +55,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="3dp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="13dp"/>
 
                 <TextView
                     android:id="@+id/stat_land_away_name"
@@ -63,7 +65,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="8dp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="13dp"/>
 
                 <TextView
                     android:id="@+id/stat_land_home_result"

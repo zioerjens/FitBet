@@ -235,7 +235,6 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
             e.printStackTrace();
         }
     }
-}
 
 
     //Liest den Gewinner des vorherigen der 1/8,1/4,1/2-Finale

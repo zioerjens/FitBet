@@ -18,9 +18,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
-        <activity android:name=".Home" android:screenOrientation="portrait">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Home"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,36 +31,38 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TestJsonParse"
             android:label="@string/titelStat"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tippen_Spielauswahl"
             android:label="@string/title_activity_tippen__spielauswahl"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Gruppenauswahl"
             android:label="@string/titelActGr"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".newGroupAct"
             android:label="@string/titelActNewGr"
-            android:theme="@style/AppTheme.PopUpGroup"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopUpGroup" />
         <activity
             android:name=".Sport"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SignIn"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Tippen"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GruppeDetail"
+            android:label=""/>
     </application>
 
 </manifest>

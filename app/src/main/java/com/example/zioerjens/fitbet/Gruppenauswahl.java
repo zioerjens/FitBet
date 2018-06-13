@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,18 +26,19 @@ import java.util.ArrayList;
 
 public class Gruppenauswahl extends AppCompatActivity {
 
-    DatabaseReference databaseGruppen;
-    DatabaseReference databaseGruppenUser;
-    ArrayList<Gruppe> listgruppe;
-    ArrayList<Gruppe_User> gruppe_usersList;
-    ArrayAdapter gruppenAdapter;
+    private DatabaseReference databaseGruppen;
+    private DatabaseReference databaseGruppenUser;
+    private ArrayList<Gruppe> listgruppe;
+    private ArrayList<Gruppe_User> gruppe_usersList;
+    private ArrayAdapter gruppenAdapter;
+    private ListView lw;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gruppenauswahl);
-
+        addOnItemL();
         databaseGruppen = FirebaseDatabase.getInstance().getReference().child("gruppe");
         databaseGruppenUser = FirebaseDatabase.getInstance().getReference().child("gruppe_user");
 
@@ -114,6 +116,7 @@ public class Gruppenauswahl extends AppCompatActivity {
                             Log.w("Namelll:",g.name);
                             Log.w("eingabe:",mName.getText().toString());
                             if(mName.getText().toString().equals(g.name)){
+                                if(mPassword.getText().toString().equals(g.passwort)){
 
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                 String currentUserID = user.getUid();
@@ -131,7 +134,15 @@ public class Gruppenauswahl extends AppCompatActivity {
                                 usersRef2.setValue(gu);
 
                                 dialog.dismiss();
+                                }
+                                else{
+                                    Toast.makeText(Gruppenauswahl.this, "Passwort Falsch",
+                                            Toast.LENGTH_SHORT).show();
+
+                                }
+
                             }
+
                         }
                     }
                 });
@@ -163,7 +174,7 @@ public class Gruppenauswahl extends AppCompatActivity {
                     // [START_EXCLUDE]
                     gruppe_usersList.add(post);
                 }
-                ValueEventListener postListener = getaslkjdfl();
+                ValueEventListener postListener = getGrFirebase();
                 databaseGruppen.addValueEventListener(postListener);
                 setListView();
             }
@@ -178,7 +189,7 @@ public class Gruppenauswahl extends AppCompatActivity {
     }
 
     private void setListView(){
-        ListView lw = (ListView) findViewById(R.id.lw);
+        lw = (ListView) findViewById(R.id.lw);
         gruppenAdapter = new ArrayAdapter<Gruppe>(Gruppenauswahl.this,android.R.layout.simple_list_item_1);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = user.getUid();
@@ -196,7 +207,7 @@ public class Gruppenauswahl extends AppCompatActivity {
         lw.setAdapter(gruppenAdapter);
     }
 
-    private ValueEventListener getaslkjdfl(){
+    private ValueEventListener getGrFirebase(){
         return new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -223,5 +234,23 @@ public class Gruppenauswahl extends AppCompatActivity {
                 // [END_EXCLUDE]
             }
         };
+    }
+
+    public void addOnItemL() {
+        AdapterView.OnItemClickListener mListClickedHandler = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), GruppeDetail.class);
+                String selected = parent.getItemAtPosition(position).toString();
+
+                Toast.makeText(getApplicationContext(), selected, Toast.LENGTH_SHORT).show();
+
+                intent.putExtra("gruppe", selected);
+                startActivity(intent);
+
+            }
+        };
+        ListView gruppen = (ListView) findViewById(R.id.lw);
+        gruppen.setOnItemClickListener(mListClickedHandler);
     }
 }

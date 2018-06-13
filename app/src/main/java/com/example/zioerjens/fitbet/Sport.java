@@ -233,12 +233,7 @@ public class Sport extends AppCompatActivity {
         sportRef.child(uid).setValue(new SportData(distance, multiplier, counter, alti));
     }
 
-    @Deprecated
-    public void insertIntoFirebaseold() {
-        DatabaseReference sportsRef = sportRef.push();
-        SportData sd = new SportData(uid, distance, multiplier, counter, alti);
-        sportsRef.setValue(sd);
-    }
+
 
     public void loadFromFirebase() {
         DatabaseReference actualData = sportRef.child(uid);
@@ -257,25 +252,7 @@ public class Sport extends AppCompatActivity {
         });
     }
 
-    @Deprecated
-    public void loadFromFirebaseold() {
-        sportRef.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        sd = dataSnapshot.getValue(SportData.class);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                }
-        );
-        Toast t = Toast.makeText(getApplicationContext(), sd.uid, Toast.LENGTH_LONG);
-        t.show();
-
-    }
 
     public void getAcc() {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();

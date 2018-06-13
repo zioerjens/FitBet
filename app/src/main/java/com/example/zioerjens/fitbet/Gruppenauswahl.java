@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,16 +26,23 @@ import java.util.ArrayList;
 public class Gruppenauswahl extends AppCompatActivity {
 
     DatabaseReference databaseGruppen;
+    DatabaseReference databaseGruppenUser;
     ArrayList<Gruppe> listgruppe;
+    ArrayList<Gruppe_User> gruppe_usersList;
+    ArrayAdapter gruppenAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gruppenauswahl);
 
-        databaseGruppen = FirebaseDatabase.getInstance().getReference().child("gruppen");
+        databaseGruppen = FirebaseDatabase.getInstance().getReference().child("gruppe");
+        databaseGruppenUser = FirebaseDatabase.getInstance().getReference().child("gruppe_user");
 
         listgruppe = new ArrayList<>();
+        gruppe_usersList = new ArrayList<>();
+        gruppenAdapter = new ArrayAdapter<Gruppe>(this, android.R.layout.simple_list_item_1);
 
         final Button newGroup = (Button) findViewById(R.id.btnGrErstellen);
         Button joinGroup = (Button) findViewById(R.id.btnGrBeitreten);
@@ -51,22 +61,22 @@ public class Gruppenauswahl extends AppCompatActivity {
                 mNewGroupe.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                        String currentUserID = user.getUid();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference ref = database.getReference("gruppe");
                         DatabaseReference usersRef = ref.push();
 
                         Gruppe g = new Gruppe(mName.getText().toString(),mPassword.getText().toString());
-                        //usersRef.child("gruppe").setValue(g);
                         usersRef.setValue(g);
 
                         //Add current user to new Group
                         DatabaseReference ref2 = database.getReference("gruppe_user");
                         DatabaseReference usersRef2 = ref2.push();
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String currentUserID = user.getUid();
 
-                        Gruppe_User gu = new Gruppe_User(currentUserID,usersRef.getKey());
+
+                        Gruppe_User gu = new Gruppe_User(g,currentUserID);
                         usersRef2.setValue(gu);
 
                         Log.e("CurrentUserId",currentUserID);
@@ -90,29 +100,36 @@ public class Gruppenauswahl extends AppCompatActivity {
                 View mView = getLayoutInflater().inflate(R.layout.activity_join_group,null);
                 final EditText mName = (EditText) mView.findViewById(R.id.groupnameJoin);
                 final EditText mPassword = (EditText) mView.findViewById(R.id.passwordJoin);
-                Button mjoinGr = (Button) mView.findViewById(R.id.btnGrBeitreten);
+                Button mjoinGroupe = (Button) mView.findViewById(R.id.btnJoinGr);
+
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
 
-                mjoinGr.setOnClickListener(new View.OnClickListener() {
+                mjoinGroupe.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //dialog.dismiss();
                         for(Gruppe g : listgruppe){
-                            Log.w("Name:",g.name);
-                            if(mName.getText().toString()==g.name){
+                            Log.w("Namelll:",g.name);
+                            Log.w("eingabe:",mName.getText().toString());
+                            if(mName.getText().toString().equals(g.name)){
+
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                String currentUserID = user.getUid();
+
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                DatabaseReference ref = database.getReference("gruppe");
-                                DatabaseReference usersRef = ref.child(g.name);
+                                DatabaseReference ref = database.getReference("gruppe").child(g.name);
+                                //DatabaseReference usersRef = ref.child()
+                                Log.w("challo:",ref.getKey());
 
 
                                 DatabaseReference ref2 = database.getReference("gruppe_user");
                                 DatabaseReference usersRef2 = ref2.push();
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                String currentUserID = user.getUid();
 
-                                Gruppe_User gu = new Gruppe_User(currentUserID,usersRef.getKey());
+                                Gruppe_User gu = new Gruppe_User(g,currentUserID);
                                 usersRef2.setValue(gu);
+
                                 dialog.dismiss();
                             }
                         }
@@ -126,32 +143,29 @@ public class Gruppenauswahl extends AppCompatActivity {
 
     }
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
 
-        /*databaseGruppen.addValueEventListener(new ValueEventListener() {
+        // Add value event listener to the post
+        // [START post_value_event_listener]
+
+
+
+
+        ValueEventListener gruppe_userListener= new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                gruppe_usersList.clear();
 
-                listgruppe.clear();
-
-                for(DataSnapshot gruppeSnapshot : dataSnapshot.getChildren()){
-                    Gruppe gruppe = gruppeSnapshot.getValue(Gruppe.class);
-                    listgruppe.add(gruppe);
+                for(DataSnapshot grSnapshot : dataSnapshot.getChildren()) {
+                    // Get Post object and use the values to update the UI
+                    Gruppe_User post = grSnapshot.getValue(Gruppe_User.class);
+                    // [START_EXCLUDE]
+                    gruppe_usersList.add(post);
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Gruppe g = dataSnapshot.getValue(Gruppe.class);
-                listgruppe.add(g);
+                ValueEventListener postListener = getaslkjdfl();
+                databaseGruppen.addValueEventListener(postListener);
+                setListView();
             }
 
             @Override
@@ -159,6 +173,55 @@ public class Gruppenauswahl extends AppCompatActivity {
 
             }
         };
-        databaseGruppen.addValueEventListener(valueEventListener);
+        databaseGruppenUser.addValueEventListener(gruppe_userListener);
+
+    }
+
+    private void setListView(){
+        ListView lw = (ListView) findViewById(R.id.lw);
+        gruppenAdapter = new ArrayAdapter<Gruppe>(Gruppenauswahl.this,android.R.layout.simple_list_item_1);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserID = user.getUid();
+
+        for(Gruppe_User gu : gruppe_usersList){
+            if(gu.userID.equals(currentUserID)){
+                gruppenAdapter.add(gu.gruppe);
+                //Log.w("sdh",g.toString());
+
+            }
+
+
+            //gruppenAdapter.add(g);
+        }
+        lw.setAdapter(gruppenAdapter);
+    }
+
+    private ValueEventListener getaslkjdfl(){
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listgruppe.clear();
+
+                for(DataSnapshot grSnapshot : dataSnapshot.getChildren()) {
+                    // Get Post object and use the values to update the UI
+                    Gruppe post = grSnapshot.getValue(Gruppe.class);
+                    // [START_EXCLUDE]
+                    listgruppe.add(post);
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("Challo", "loadPost:onCancelled", databaseError.toException());
+                // [START_EXCLUDE]
+                Toast.makeText(Gruppenauswahl.this, "Failed to load post.",
+                        Toast.LENGTH_SHORT).show();
+                // [END_EXCLUDE]
+            }
+        };
     }
 }

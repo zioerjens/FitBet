@@ -40,6 +40,21 @@ public class Spiele {
         this.matchday = matchday;
     }
 
+    public Spiele(String spielName, String spielType, String homeTeam, String awayTeam, String homeResult, String awayResult, String homePenalty, String awayPenalty, String spielDate, String stadium, String finished, String matchday) {
+        this.spielName = spielName;
+        this.spielType = spielType;
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.homeResult = homeResult;
+        this.awayResult = awayResult;
+        this.spielDate = spielDate;
+        this.stadium = stadium;
+        this.finished = finished;
+        this.matchday = matchday;
+        this.homePenalty = homePenalty;
+        this.awayPenalty = awayPenalty;
+    }
+
     public Spiele(String homeTeam, String awayTeam, String homeResult, String awayResult, String spielName, TestJsonParse act){
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;

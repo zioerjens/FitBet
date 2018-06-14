@@ -3,6 +3,7 @@ package com.example.zioerjens.fitbet;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -22,12 +23,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class JsonAsynch extends AsyncTask<String,String,String> {
+public class JsonAsyncTippen extends AsyncTask<String,String,String> {
 
-    private TestJsonParse teamAct;
+    private TippenAllGames teamAct;
     private String url2;
     private ProgressDialog mDialog;
     private ArrayAdapter laenderListe;
+    private ArrayList<Land> alleLaender;
     private ArrayAdapter spieleListe;
 
     private String landName;
@@ -40,7 +42,7 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
 
 
     private String spielName;
-    private  String spielType;
+    private String spielType;
     private String homeTeam;
     private String awayTeam;
     private String homeResult;
@@ -65,7 +67,7 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
 
 
 
-    public JsonAsynch(String url, TestJsonParse teamAct, ProgressDialog mDialog){
+    public JsonAsyncTippen(String url, TippenAllGames teamAct, ProgressDialog mDialog){
         this.url2 = url;
         this.teamAct = teamAct;
         this.mDialog = mDialog;
@@ -101,9 +103,11 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
     }
     protected void onPostExecute(String result) {
 
+        alleLaender = new ArrayList<>();
         parseJsonLoadLand(result);
         parseJsonSpiel(result);
-
+        listView = (ListView) teamAct.findViewById(R.id.spielL);
+        listView.setOnItemClickListener(new OnSpielClickListener(teamAct,alleLaender));
     }
     //Liest die Länder aus dem JSON und speichert diese als Land-Objekt Arryadapter
     public void parseJsonLoadLand(String jsonstring){
@@ -126,6 +130,7 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
                 emojiString=subObj.getString("emojiString");
                 land = new Land(landName,landId,fifaCode,flag,emoji,emojiString,iso2);
                 laenderListe.add(land);
+                alleLaender.add(land);
             }
 
         }
@@ -215,9 +220,7 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
                         spieleListe.add(spiel);
                         spieleList.add(spiel);
                     }
-
                 }
-
             }
 
 
@@ -316,4 +319,4 @@ public class JsonAsynch extends AsyncTask<String,String,String> {
                 this.awayTeam=spieleList.get(spielId).awayTeam;
             }
         }
-}}
+    }}

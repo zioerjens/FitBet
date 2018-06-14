@@ -2,7 +2,9 @@ package com.example.zioerjens.fitbet;
 
 import android.widget.ArrayAdapter;
 
-public class Spiele {
+import java.io.Serializable;
+
+public class Spiele implements Serializable {
     String spielName;
     String spielType;
     String homeTeam;
@@ -18,9 +20,10 @@ public class Spiele {
     String awayPenalty;
 
     private TestJsonParse act;
+    private TippenAllGames act2;
     private ArrayAdapter laenderListe;
-    private Land landHome;
-    private Land landAway;
+    Land landHome;
+    Land landAway;
 
     private String homeTeamStr;
     private String awayTeamStr;
@@ -75,11 +78,30 @@ public class Spiele {
             this.homeTeam = homeTeam;
             this.awayTeam = awayTeam;
         }
-
-
-
-
     }
+
+    public Spiele(String homeTeam, String awayTeam, String homeResult, String awayResult, String spielName, TippenAllGames act){
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.homeResult =homeResult;
+        this.awayResult = awayResult;
+        this.act2 = act;
+        this.spielName = spielName;
+
+        laenderListe=act2.getLaenderListe();
+        try{
+            landHome = (Land) laenderListe.getItem(Integer.parseInt(homeTeam)-1);
+            landAway = (Land) laenderListe.getItem(Integer.parseInt(awayTeam)-1);
+            this.homeTeam = landHome.getEmojiString()+" "+landHome.getFifaCode();
+            this.awayTeam = landAway.getFifaCode()+" "+landAway.getEmojiString();
+        }
+        catch (Exception e){
+
+            this.homeTeam = homeTeam;
+            this.awayTeam = awayTeam;
+        }
+    }
+
     public Spiele(String homeTeam, String awayTeam, String homeResult, String awayResult, String homePenalty, String awayPenalty, String spielName, String winner, TestJsonParse act){
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -93,6 +115,33 @@ public class Spiele {
 
 
         laenderListe=act.getLaenderListe();
+        try{
+            landHome = (Land) laenderListe.getItem(Integer.parseInt(homeTeam)-1);
+            landAway = (Land) laenderListe.getItem(Integer.parseInt(awayTeam)-1);
+            this.homeTeam = landHome.getEmojiString()+" "+landHome.getFifaCode();
+            this.awayTeam = landAway.getFifaCode()+" "+landAway.getEmojiString();
+        }
+        catch (Exception e){
+
+            this.homeTeam = homeTeam;
+            this.awayTeam = awayTeam;
+        }
+
+    }
+
+    public Spiele(String homeTeam, String awayTeam, String homeResult, String awayResult, String homePenalty, String awayPenalty, String spielName, String winner, TippenAllGames act){
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.homeResult =homeResult;
+        this.awayResult = awayResult;
+        this.act2 = act;
+        this.spielName = spielName;
+        this.homePenalty = homePenalty;
+        this.awayPenalty = awayPenalty;
+        this.winner = winner;
+
+
+        laenderListe=act2.getLaenderListe();
         try{
             landHome = (Land) laenderListe.getItem(Integer.parseInt(homeTeam)-1);
             landAway = (Land) laenderListe.getItem(Integer.parseInt(awayTeam)-1);

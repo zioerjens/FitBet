@@ -1,9 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".TippenAllGames">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="4dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="4dp"
+    tools:context=".TestJsonParse"
+    android:orientation="vertical"
 
-</android.support.constraint.ConstraintLayout>
+    android:id="@+id/layout"
+    >
+
+
+    <ListView
+        android:id="@+id/spielL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_weight="1"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="4dp">
+
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/resultbar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:background="@color/backGrStat"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/TVPointsMultiplikator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TODO: Points und Multiplikator"
+            android:textColor="@color/backStat" />
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+

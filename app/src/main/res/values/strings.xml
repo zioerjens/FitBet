@@ -57,4 +57,5 @@
     <string name="distance">Distance</string>
     <string name="distanceAmmount">"0</string>
     <string name="titelActJoinGr">Gruppe beitreten</string>
+    <string name="tippen">tippen</string>
 </resources>

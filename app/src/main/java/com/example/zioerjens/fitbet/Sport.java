@@ -28,9 +28,9 @@ import java.text.DecimalFormat;
 
 public class Sport extends AppCompatActivity {
 
-    public LocationManager locMan;
+    private LocationManager locMan;
     private LocationListener locList;
-    public Location tempLoc = null;
+    private Location tempLoc = null;
     private double distance;
     private double alti;
     private double multiplier;
@@ -206,7 +206,6 @@ public class Sport extends AppCompatActivity {
         locMan.removeUpdates(locList);
         Toast t = Toast.makeText(getApplicationContext(), "stoped", Toast.LENGTH_LONG);
         t.show();
-
         insertIntoFirebase();
     }
 
@@ -235,6 +234,7 @@ public class Sport extends AppCompatActivity {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
+    @Deprecated
     public static synchronized double getMultiplier(String userId){
         DatabaseReference actualData = FirebaseDatabase.getInstance().getReference("sportler").child(userId);
         actualData.addListenerForSingleValueEvent(new ValueEventListener() {

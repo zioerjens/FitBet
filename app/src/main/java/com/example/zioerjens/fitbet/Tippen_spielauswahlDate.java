@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Tippen_spielauswahlDate extends Fragment {
 
@@ -32,6 +34,9 @@ public class Tippen_spielauswahlDate extends Fragment {
     private Calendar selectedDate;
     private DatePicker datePicker;
     private FragmentActivity myContext;
+    private Tippen_spielauswahlDate spielauswahlDate = this;
+    private ArrayAdapter spielListe;
+    private String url = "https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json";
 
     @Nullable
     @Override
@@ -52,24 +57,7 @@ public class Tippen_spielauswahlDate extends Fragment {
                         DialogFragment newFragmentDate = new DatePickerFragment();
                         newFragmentDate.show(myContext.getFragmentManager(), "datePicker");
 
-/*
-                        AlertDialog.Builder mBuilder = new AlertDialog.Builder(activity.getContext());
-                        View mView = getLayoutInflater().inflate(R.layout.date_picker,null);
-                        mBuilder.setView(mView);
-                        AlertDialog dialog = mBuilder.create();
-                        dialog.show();
-                        datePicker = dialog.findViewById(R.id.datePicker);
-                        /*
-                        datePicker.setOnDateChangedListener(
-                                new DatePicker.OnDateChangedListener() {
-                                    @Override
-                                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                        year = datePicker.getYear();
-                                        month = datePicker.getMonth();
-                                        day = datePicker.getDayOfMonth();
-                                    }
-                                }
-                        );*/
+
                     }
                 }
         );
@@ -90,9 +78,9 @@ public class Tippen_spielauswahlDate extends Fragment {
         super.onAttach(activity);
     }
 
-
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
+
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -108,10 +96,15 @@ public class Tippen_spielauswahlDate extends Fragment {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             Log.e("date",year + "-" + month + "-" + day);
+            //TODO start startAT
+            TippenAsync fillData = new TippenAsync("https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json",new Date());
+            fillData.execute();
         }
     }
 
     public void loadMatches(){
         //TODO spiele für das besimmte Datum einfügen.
     }
+
+    public ArrayAdapter getSpielListe(){return spielListe;}
 }

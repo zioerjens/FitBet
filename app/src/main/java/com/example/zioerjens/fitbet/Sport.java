@@ -82,6 +82,12 @@ public class Sport extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    protected void onDestroy(){
+        insertIntoFirebase();
+        super.onDestroy();
+    }
+
     private void checkLocPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -164,30 +170,6 @@ public class Sport extends AppCompatActivity {
         tvMultiplier.setText(mdf.format(multiplier));
 
         calcMultiplier();
-
-        //debugging/Testing
-        final TextView tvUp = findViewById(R.id.upwardSlope);
-        tvUp.setText(df.format(tempLoc.getLatitude()));
-    }
-
-    //für erstes Starten der App(nur solange bei originalmethode der test teil noch besteht)
-    private void fillTextviews(String test) {
-        DecimalFormat df = new DecimalFormat("#.####");
-        df.setRoundingMode(RoundingMode.CEILING);
-
-        final TextView tvDistance = findViewById(R.id.distanceAmmount);
-        tvDistance.setText(df.format(distance));
-
-        final TextView tvUpA = findViewById(R.id.upwardSlopeAmmount);
-        tvUpA.setText(df.format(alti));
-
-        DecimalFormat mdf = new DecimalFormat("#.#");
-        mdf.setRoundingMode(RoundingMode.CEILING);
-
-        final TextView tvMultiplier = findViewById(R.id.multiplicatorScore);
-        tvMultiplier.setText(mdf.format(multiplier));
-
-        calcMultiplier();
     }
 
     private void fillData() {
@@ -196,11 +178,13 @@ public class Sport extends AppCompatActivity {
             this.counter = sd.counter;
             this.alti = sd.altitude;
             this.distance = sd.distance;
+            this.alti = sd.altitude;
         } else if (multiplier == 0) {
-            this.multiplier = 1.1;
-            this.counter = 1;
+            this.multiplier = 1;
+            this.counter = 0;
             this.actualProgress = 0;
-            this.distance = 50;
+            this.distance = 0;
+            this.alti = 0;
         }
     }
 
@@ -223,7 +207,6 @@ public class Sport extends AppCompatActivity {
         locMan.removeUpdates(locList);
         Toast t = Toast.makeText(getApplicationContext(), "stoped", Toast.LENGTH_LONG);
         final TextView tvUp = findViewById(R.id.upwardSlope);
-        tvUp.setText("Upward slope");
         t.show();
 
         insertIntoFirebase();
@@ -233,13 +216,6 @@ public class Sport extends AppCompatActivity {
         sportRef.child(uid).setValue(new SportData(distance, multiplier, counter, alti));
     }
 
-    @Deprecated
-    public void insertIntoFirebaseold() {
-        DatabaseReference sportsRef = sportRef.push();
-        SportData sd = new SportData(uid, distance, multiplier, counter, alti);
-        sportsRef.setValue(sd);
-    }
-
     public void loadFromFirebase() {
         DatabaseReference actualData = sportRef.child(uid);
         actualData.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -247,7 +223,7 @@ public class Sport extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 sd = dataSnapshot.getValue(SportData.class);
                 fillData();
-                fillTextviews("start");
+                fillTextviews();
             }
 
             @Override
@@ -255,26 +231,6 @@ public class Sport extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Deprecated
-    public void loadFromFirebaseold() {
-        sportRef.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        sd = dataSnapshot.getValue(SportData.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                }
-        );
-        Toast t = Toast.makeText(getApplicationContext(), sd.uid, Toast.LENGTH_LONG);
-        t.show();
-
     }
 
     public void getAcc() {

@@ -14,6 +14,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class TestJsonParse extends AppCompatActivity {
@@ -28,6 +35,8 @@ public class TestJsonParse extends AppCompatActivity {
     private ListView listView;
     private SpieleAdapter spieleAdapter;
     private RelativeLayout resultBar;
+
+    private SportData data;
 
 
 
@@ -49,9 +58,29 @@ public class TestJsonParse extends AppCompatActivity {
         spieleListe = new ArrayAdapter<Spiele>(this, android.R.layout.simple_list_item_1);
 
 
+        //Spaghetti could be outsourced
+        DatabaseReference statRef = FirebaseDatabase.getInstance().getReference("sportler");
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference actualData = statRef.child(uid);
 
 
+        actualData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                data = dataSnapshot.getValue(SportData.class);
+
+                //spaghetti part 2
+                TextView pm = findViewById(R.id.TVPointsMultiplikator);
+                String text = "Multiplikator: "+data.multiplier+"x";
+                pm.setText(text);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
+
 
 
 

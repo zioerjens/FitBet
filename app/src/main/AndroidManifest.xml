@@ -60,6 +60,10 @@
             android:name=".Tippen"
             android:screenOrientation="portrait"/>
         <activity android:name=".TippenAllGames"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GruppeDetail"
+            android:label=""/>
     </application>
 
 </manifest>

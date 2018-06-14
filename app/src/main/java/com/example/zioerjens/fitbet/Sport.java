@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,8 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Sport extends AppCompatActivity {
 
@@ -43,6 +40,8 @@ public class Sport extends AppCompatActivity {
 
     private DatabaseReference sportRef;
     private SportData sd;
+
+    private static volatile double multiplikator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,5 +234,22 @@ public class Sport extends AppCompatActivity {
 
     public void getAcc() {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    public static double getMultiplier(String userId){
+        DatabaseReference actualData = FirebaseDatabase.getInstance().getReference("sportler").child(userId);
+        actualData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                SportData sdTemp = dataSnapshot.getValue(SportData.class);
+                multiplikator = sdTemp.multiplier;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return multiplikator;
     }
 }

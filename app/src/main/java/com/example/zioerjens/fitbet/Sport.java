@@ -41,6 +41,8 @@ public class Sport extends AppCompatActivity {
     private DatabaseReference sportRef;
     private SportData sd;
 
+    private static volatile double multiplikator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -232,5 +234,22 @@ public class Sport extends AppCompatActivity {
 
     public void getAcc() {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    public static double getMultiplier(String userId){
+        DatabaseReference actualData = FirebaseDatabase.getInstance().getReference("sportler").child(userId);
+        actualData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                SportData sdTemp = dataSnapshot.getValue(SportData.class);
+                multiplikator = sdTemp.multiplier;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return multiplikator;
     }
 }

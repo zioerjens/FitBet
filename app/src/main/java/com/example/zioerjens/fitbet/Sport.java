@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,8 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Sport extends AppCompatActivity {
 
@@ -43,6 +40,8 @@ public class Sport extends AppCompatActivity {
 
     private DatabaseReference sportRef;
     private SportData sd;
+
+    private static volatile double multiplikator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +79,12 @@ public class Sport extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy(){
+        insertIntoFirebase();
+        super.onDestroy();
     }
 
     private void checkLocPermission() {
@@ -164,30 +169,6 @@ public class Sport extends AppCompatActivity {
         tvMultiplier.setText(mdf.format(multiplier));
 
         calcMultiplier();
-
-        //debugging/Testing
-        final TextView tvUp = findViewById(R.id.upwardSlope);
-        tvUp.setText(df.format(tempLoc.getLatitude()));
-    }
-
-    //für erstes Starten der App(nur solange bei originalmethode der test teil noch besteht)
-    private void fillTextviews(String test) {
-        DecimalFormat df = new DecimalFormat("#.####");
-        df.setRoundingMode(RoundingMode.CEILING);
-
-        final TextView tvDistance = findViewById(R.id.distanceAmmount);
-        tvDistance.setText(df.format(distance));
-
-        final TextView tvUpA = findViewById(R.id.upwardSlopeAmmount);
-        tvUpA.setText(df.format(alti));
-
-        DecimalFormat mdf = new DecimalFormat("#.#");
-        mdf.setRoundingMode(RoundingMode.CEILING);
-
-        final TextView tvMultiplier = findViewById(R.id.multiplicatorScore);
-        tvMultiplier.setText(mdf.format(multiplier));
-
-        calcMultiplier();
     }
 
     private void fillData() {
@@ -196,11 +177,13 @@ public class Sport extends AppCompatActivity {
             this.counter = sd.counter;
             this.alti = sd.altitude;
             this.distance = sd.distance;
+            this.alti = sd.altitude;
         } else if (multiplier == 0) {
-            this.multiplier = 1.1;
-            this.counter = 1;
+            this.multiplier = 1;
+            this.counter = 0;
             this.actualProgress = 0;
-            this.distance = 50;
+            this.distance = 0;
+            this.alti = 0;
         }
     }
 
@@ -223,7 +206,6 @@ public class Sport extends AppCompatActivity {
         locMan.removeUpdates(locList);
         Toast t = Toast.makeText(getApplicationContext(), "stoped", Toast.LENGTH_LONG);
         final TextView tvUp = findViewById(R.id.upwardSlope);
-        tvUp.setText("Upward slope");
         t.show();
 
         insertIntoFirebase();
@@ -233,8 +215,6 @@ public class Sport extends AppCompatActivity {
         sportRef.child(uid).setValue(new SportData(distance, multiplier, counter, alti));
     }
 
-
-
     public void loadFromFirebase() {
         DatabaseReference actualData = sportRef.child(uid);
         actualData.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -242,7 +222,7 @@ public class Sport extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 sd = dataSnapshot.getValue(SportData.class);
                 fillData();
-                fillTextviews("start");
+                fillTextviews();
             }
 
             @Override
@@ -252,9 +232,30 @@ public class Sport extends AppCompatActivity {
         });
     }
 
-
-
     public void getAcc() {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    public static synchronized double getMultiplier(String userId){
+        DatabaseReference actualData = FirebaseDatabase.getInstance().getReference("sportler").child(userId);
+        actualData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    SportData sdTemp = dataSnapshot.getValue(SportData.class);
+                    multiplikator = sdTemp.multiplier;
+                }
+                catch(NullPointerException e){
+                    multiplikator = 1.0;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return multiplikator;
     }
 }

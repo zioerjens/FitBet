@@ -33,6 +33,7 @@ public class GruppeDetail extends AppCompatActivity {
     private List <GruppeDetailUser> gruppeDatailUserList;
     private DatabaseReference databaseGruppeDetail;
     private FirebaseUser user;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +98,8 @@ public class GruppeDetail extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent = new Intent(getApplicationContext(),TestJsonParse.class);
-                User selectedUser = gruppeDatailUserList.get(position).user;
+                intent = new Intent(getApplicationContext(),TestJsonParse.class);
+                User selectedUser = userGruppe.get(position).user;
                 Snackbar.make(view,selectedUser.username, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 intent.putExtra("userID",selectedUser.userID);
@@ -162,6 +163,8 @@ public class GruppeDetail extends AppCompatActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
+
+
     }
 
 

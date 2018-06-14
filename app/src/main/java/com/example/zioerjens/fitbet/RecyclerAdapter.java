@@ -32,7 +32,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GruppeDetailUser current = data.get(position);
-        holder.name.setText(current.username);
+        holder.name.setText(current.user.username);
     }
 
     @Override

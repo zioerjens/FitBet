@@ -2,12 +2,12 @@ package com.example.zioerjens.fitbet;
 
 public class Gruppe_User {
     public Gruppe gruppe;
-    public String userID;
+    public User user;
 
-
-    public Gruppe_User(Gruppe gruppe,String userID){
+    public Gruppe_User(Gruppe gruppe,User user){
         this.gruppe = gruppe;
-        this.userID = userID;
+        this.user = user;
     }
+
     public Gruppe_User(){}
 }

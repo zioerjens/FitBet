@@ -64,8 +64,8 @@ public class Gruppenauswahl extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                        String currentUserID = user.getUid();
+                        User currentUser = new User(user.getDisplayName(),user.getUid(),user.getEmail());
+                        //String currentUser = user.getDisplayName();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference ref = database.getReference("gruppe");
                         DatabaseReference usersRef = ref.push();
@@ -78,10 +78,10 @@ public class Gruppenauswahl extends AppCompatActivity {
                         DatabaseReference usersRef2 = ref2.push();
 
 
-                        Gruppe_User gu = new Gruppe_User(g,currentUserID);
+                        Gruppe_User gu = new Gruppe_User(g,currentUser);
                         usersRef2.setValue(gu);
 
-                        Log.e("CurrentUserId",currentUserID);
+                        Log.e("CurrentUserId",user.getDisplayName());
 
 
 
@@ -119,8 +119,8 @@ public class Gruppenauswahl extends AppCompatActivity {
                                 if(mPassword.getText().toString().equals(g.passwort)){
 
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                String currentUserID = user.getUid();
-
+                                User currentUser = new User(user.getDisplayName(),user.getUid(),user.getEmail());
+                                //String currentUser = user.getDisplayName();
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference ref = database.getReference("gruppe").child(g.name);
                                 //DatabaseReference usersRef = ref.child()
@@ -130,7 +130,7 @@ public class Gruppenauswahl extends AppCompatActivity {
                                 DatabaseReference ref2 = database.getReference("gruppe_user");
                                 DatabaseReference usersRef2 = ref2.push();
 
-                                Gruppe_User gu = new Gruppe_User(g,currentUserID);
+                                Gruppe_User gu = new Gruppe_User(g,currentUser);
                                 usersRef2.setValue(gu);
 
                                 dialog.dismiss();
@@ -195,7 +195,7 @@ public class Gruppenauswahl extends AppCompatActivity {
         String currentUserID = user.getUid();
 
         for(Gruppe_User gu : gruppe_usersList){
-            if(gu.userID.equals(currentUserID)){
+            if(gu.user.userID.equals(currentUserID)){
                 gruppenAdapter.add(gu.gruppe);
                 //Log.w("sdh",g.toString());
 

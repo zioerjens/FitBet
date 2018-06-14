@@ -27,10 +27,11 @@ public class Tippen_spielauswahlCountry extends Fragment{
 
         activity = this.getView();
         spinner = (Spinner) activity.findViewById(R.id.countrySpinner);
-        addCountriesToSpinner();
+        addCountriesToSpinner(spinner);
     }
 
-    public void addCountriesToSpinner(){
-        //TODO gruppen zu dropdown hinzufügen
+    public void addCountriesToSpinner(Spinner spinner){
+        //TODO länder zu dropdown hinzufügen
+
     }
 }

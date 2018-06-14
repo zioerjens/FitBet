@@ -39,7 +39,7 @@ public class Home extends AppCompatActivity {
         final Button buttonTippen = findViewById(R.id.btnTippen);
         buttonTippen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),tippen_Spielauswahl.class);
+                Intent intent = new Intent(getApplicationContext(),TippenAllGames.class);
                 startActivity(intent);
             }
         });

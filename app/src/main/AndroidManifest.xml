@@ -47,7 +47,8 @@
         <activity
             android:name=".SignIn"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Tippen"></activity>
+        <activity android:name=".Tippen" />
+        <activity android:name=".TippenAllGames"></activity>
     </application>
 
 </manifest>

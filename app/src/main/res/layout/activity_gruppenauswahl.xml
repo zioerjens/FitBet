@@ -10,6 +10,11 @@
 
     android:id="@+id/gruppenauswahl"
     >
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lw"
+        android:gravity="top"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +22,9 @@
         android:layout_weight="1"
         android:gravity="center|bottom"
         android:orientation="vertical">
+
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -16,11 +16,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Sport extends AppCompatActivity {
 
@@ -31,6 +38,11 @@ public class Sport extends AppCompatActivity {
     private double alti;
     private double multiplier;
     private int actualProgress;
+    private int counter;
+    private String uid = "c";
+
+    private DatabaseReference sportRef;
+    private SportData sd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,41 +66,42 @@ public class Sport extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         checkLocPermission();
         registerGPS();
-        //ToDo loadMultiplier() + loadActualProgress
+        getAcc();
+        sportRef = FirebaseDatabase.getInstance().getReference("sportler");
 
-        //ToDo remove
-        fillMultiplier();
+        loadFromFirebase();
+
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
     }
 
-    private void checkLocPermission(){
-        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+    private void checkLocPermission() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  }, 1);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         }
-        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  }, 2);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 2);
         }
     }
 
-    private void registerGPS(){
+    private void registerGPS() {
         locMan = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         locList = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                if(tempLoc.getLatitude() != 0.0 && tempLoc.getLongitude() != 0.0 && tempLoc != null ){
+                if (tempLoc.getLatitude() != 0.0 && tempLoc.getLongitude() != 0.0 && tempLoc != null) {
                     distance += location.distanceTo(tempLoc);
-                    if(location.getAltitude()>tempLoc.getAltitude()){
+                    if (location.getAltitude() > tempLoc.getAltitude()) {
                         alti += location.getAltitude() - tempLoc.getAltitude();
                     }
                 }
@@ -112,28 +125,29 @@ public class Sport extends AppCompatActivity {
         };
     }
 
-    private void calcMultiplier(){
+    private void calcMultiplier() {
         int requirement = 50;
-        if(distance>requirement){
+        double delta = distance - (counter * requirement);
+        if (delta > requirement) {
 
-            int counter = (int) (distance / requirement );
+            int mutliplierSteps = (int) (delta / requirement);
 
-            for(int i = 0; i<counter;i++){
+            for (int i = 0; i < mutliplierSteps; i++) {
                 multiplier += 0.1;
-                distance -= requirement;
+                counter++;
             }
         }
-        setProgress(distance / requirement);
+        setProgress(delta / requirement);
 
     }
 
-    private void setProgress(double progress){
+    private void setProgress(double progress) {
         ProgressBar p = findViewById(R.id.distanceProgressBar);
-        actualProgress = (int)(100*progress);
+        actualProgress = (int) (100 * progress);
         p.setProgress(actualProgress);
     }
 
-    private void fillTextviews(){
+    private void fillTextviews() {
         DecimalFormat df = new DecimalFormat("#.####");
         df.setRoundingMode(RoundingMode.CEILING);
 
@@ -143,45 +157,71 @@ public class Sport extends AppCompatActivity {
         final TextView tvUpA = findViewById(R.id.upwardSlopeAmmount);
         tvUpA.setText(df.format(alti));
 
-        fillMultiplier();
-
-        //debugging/Testing
-        final TextView tvUp = findViewById(R.id.upwardSlope);
-        tvUp.setText(df.format(tempLoc.getLatitude()));
-    }
-
-    private void fillMultiplier(){
-        if(multiplier == 0){
-            this.multiplier = 1.1;
-            this.actualProgress = 0;
-        }
         DecimalFormat mdf = new DecimalFormat("#.#");
         mdf.setRoundingMode(RoundingMode.CEILING);
 
         final TextView tvMultiplier = findViewById(R.id.multiplicatorScore);
         tvMultiplier.setText(mdf.format(multiplier));
 
-        setProgress(0);
+        calcMultiplier();
+
+        //debugging/Testing
+        final TextView tvUp = findViewById(R.id.upwardSlope);
+        tvUp.setText(df.format(tempLoc.getLatitude()));
+    }
+
+    //für erstes Starten der App(nur solange bei originalmethode der test teil noch besteht)
+    private void fillTextviews(String test) {
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        final TextView tvDistance = findViewById(R.id.distanceAmmount);
+        tvDistance.setText(df.format(distance));
+
+        final TextView tvUpA = findViewById(R.id.upwardSlopeAmmount);
+        tvUpA.setText(df.format(alti));
+
+        DecimalFormat mdf = new DecimalFormat("#.#");
+        mdf.setRoundingMode(RoundingMode.CEILING);
+
+        final TextView tvMultiplier = findViewById(R.id.multiplicatorScore);
+        tvMultiplier.setText(mdf.format(multiplier));
+
+        calcMultiplier();
+    }
+
+    private void fillData() {
+        if (sd != null) {
+            this.multiplier = sd.multiplier;
+            this.counter = sd.counter;
+            this.alti = sd.altitude;
+            this.distance = sd.distance;
+        } else if (multiplier == 0) {
+            this.multiplier = 1.1;
+            this.counter = 1;
+            this.actualProgress = 0;
+            this.distance = 50;
+        }
     }
 
     public void onStartClicked() {
         try {
             locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, locList);
+        } catch (SecurityException e) {
+            Log.v("Location Permission err", e.getMessage());
         }
-        catch(SecurityException e){
-            Log.v("Location Permission err",e.getMessage());
-        }
-        if(tempLoc == null){
+        if (tempLoc == null) {
             tempLoc = new Location(LocationManager.GPS_PROVIDER);
         }
-        Toast t =Toast.makeText(getApplicationContext(),"started",Toast.LENGTH_LONG);
+        Toast t = Toast.makeText(getApplicationContext(), "started", Toast.LENGTH_LONG);
 
         t.show();
+        fillTextviews();
     }
 
-    public void onStopClicked(){
+    public void onStopClicked() {
         locMan.removeUpdates(locList);
-        Toast t =Toast.makeText(getApplicationContext(),"stoped",Toast.LENGTH_LONG);
+        Toast t = Toast.makeText(getApplicationContext(), "stoped", Toast.LENGTH_LONG);
         final TextView tvUp = findViewById(R.id.upwardSlope);
         tvUp.setText("Upward slope");
         t.show();
@@ -189,12 +229,32 @@ public class Sport extends AppCompatActivity {
         insertIntoFirebase();
     }
 
-    public void insertIntoFirebase(){
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference ref = db.getReference("sportler");
-        DatabaseReference sportsRef = ref.push();
-        SportData sd = new SportData(distance,multiplier);
-        sportsRef.setValue(sd);
+    public void insertIntoFirebase() {
+        sportRef.child(uid).setValue(new SportData(distance, multiplier, counter, alti));
     }
 
+
+
+    public void loadFromFirebase() {
+        DatabaseReference actualData = sportRef.child(uid);
+        actualData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                sd = dataSnapshot.getValue(SportData.class);
+                fillData();
+                fillTextviews("start");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+
+    public void getAcc() {
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
 }

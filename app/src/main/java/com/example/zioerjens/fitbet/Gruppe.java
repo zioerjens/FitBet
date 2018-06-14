@@ -9,4 +9,10 @@ public class Gruppe {
         this.name = name;
         this.passwort = passwort;
     }
+    public Gruppe(){}
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

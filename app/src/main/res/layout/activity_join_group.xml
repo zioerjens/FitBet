@@ -15,7 +15,7 @@
         />
 
     <EditText
-        android:id="@+id/groupname"
+        android:id="@+id/groupnameJoin"
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         android:layout_margin="10dp"
         android:hint="@string/inputNewGroupName" />
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/passwordJoin"
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnNewGr"
+        android:id="@+id/btnJoinGr"
         android:text="@string/btnGrBeitreten"
         android:background="@color/colorAccent"
         android:textColor="@color/backStat"

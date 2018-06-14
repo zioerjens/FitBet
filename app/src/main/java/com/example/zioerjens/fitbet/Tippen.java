@@ -24,11 +24,14 @@ public class Tippen extends AppCompatActivity {
 
     private EditText tippAway;
     private Button submitTipp;
+    private String spielName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tippen);
+        Intent intent = this.getIntent();
+        spielName = intent.getStringExtra("spielName");
     }
 
     @Override
@@ -61,7 +64,7 @@ public class Tippen extends AppCompatActivity {
         tippAway = findViewById(R.id.tippAway);
         submitTipp = findViewById(R.id.submitTipp);
 
-        submitTipp.setOnClickListener(new SubmitTippListener(this));
+        submitTipp.setOnClickListener(new SubmitTippListener(this, spielName));
     }
 
     public EditText getTippHome() {

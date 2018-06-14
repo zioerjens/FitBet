@@ -29,6 +29,7 @@ public class OnSpielClickListener implements AdapterView.OnItemClickListener {
         intent.putExtra("land2Icon",selected.landAway.getEmojiString());
         intent.putExtra("homeScore",selected.homeResult);
         intent.putExtra("awayScore",selected.awayResult);
+        intent.putExtra("spielName",selected.spielName);
 
         activity.startActivity(intent);
     }

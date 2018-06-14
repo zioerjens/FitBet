@@ -11,9 +11,11 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SubmitTippListener implements View.OnClickListener {
 
     private Tippen activity;
+    private String spielName;
 
-    public SubmitTippListener(Tippen activity){
+    public SubmitTippListener(Tippen activity, String spielName){
         this.activity = activity;
+        this.spielName = spielName;
     }
 
     @Override
@@ -24,6 +26,6 @@ public class SubmitTippListener implements View.OnClickListener {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference("tipp_user");
         DatabaseReference ref2 = ref.push();
-        ref2.setValue(new TippUser(new Tipp(tippHome,tippAway),new User(currentUser.getDisplayName(), currentUser.getUid(), currentUser.getEmail())));
+        ref2.setValue(new TippUser(new Tipp(tippHome,tippAway,spielName),new User(currentUser.getDisplayName(), currentUser.getUid(), currentUser.getEmail())));
     }
 }

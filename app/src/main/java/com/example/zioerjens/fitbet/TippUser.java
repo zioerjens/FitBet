@@ -4,8 +4,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class TippUser {
 
-    private Tipp tipp;
-    private User user;
+    public Tipp tipp;
+    public User user;
 
     public TippUser(Tipp tipp, User user) {
         this.tipp = tipp;

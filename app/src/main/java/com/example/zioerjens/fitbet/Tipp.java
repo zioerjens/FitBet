@@ -2,13 +2,15 @@ package com.example.zioerjens.fitbet;
 
 public class Tipp {
 
-    private String tippHome;
-    private String tippAway;
+    public String tippHome;
+    public String tippAway;
+    public String spielName;
 
     public Tipp(){}
 
-    public Tipp(String tippHome, String tippAway) {
+    public Tipp(String tippHome, String tippAway, String spielName) {
         this.tippHome = tippHome;
         this.tippAway = tippAway;
+        this.spielName = spielName;
     }
 }

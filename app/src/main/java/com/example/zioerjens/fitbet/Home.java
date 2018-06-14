@@ -32,6 +32,8 @@ public class Home extends AppCompatActivity {
         buttonStat.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),TestJsonParse.class);
+                intent.putExtra("userID",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                intent.putExtra("userName",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                 startActivity(intent);
             }
         });

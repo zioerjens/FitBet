@@ -80,7 +80,7 @@ public class GruppeDetail extends AppCompatActivity {
 
     public void getDataUserGroup(){
 
-        List<GruppeDetailUser> userGruppe = new ArrayList<>();
+        final List<GruppeDetailUser> userGruppe = new ArrayList<>();
         //users = FirebaseAuth.getInstance().
         for(GruppeDetailUser gdu : gruppeDatailUserList){
             if(gdu.gruppe.name.equals(gruppenName)){
@@ -97,8 +97,14 @@ public class GruppeDetail extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Intent intent = new Intent(getApplicationContext(),TestJsonParse.class);
+                User selectedUser = gruppeDatailUserList.get(position).user;
+                Snackbar.make(view,selectedUser.username, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                intent.putExtra("userID",selectedUser.userID);
+                intent.putExtra("userName",selectedUser.username);
+
+                startActivity(intent);
             }
 
             @Override

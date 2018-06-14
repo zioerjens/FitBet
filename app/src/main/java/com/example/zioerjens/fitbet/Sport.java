@@ -236,13 +236,19 @@ public class Sport extends AppCompatActivity {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public static double getMultiplier(String userId){
+    public static synchronized double getMultiplier(String userId){
         DatabaseReference actualData = FirebaseDatabase.getInstance().getReference("sportler").child(userId);
         actualData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                SportData sdTemp = dataSnapshot.getValue(SportData.class);
-                multiplikator = sdTemp.multiplier;
+                try {
+                    SportData sdTemp = dataSnapshot.getValue(SportData.class);
+                    multiplikator = sdTemp.multiplier;
+                }
+                catch(NullPointerException e){
+                    multiplikator = 1.0;
+                }
+
             }
 
             @Override

@@ -9,12 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
     private LayoutInflater inflater;
     List<GruppeDetailUser> data;
+    double multiplikator;
 
     public RecyclerAdapter(Context context, List<GruppeDetailUser> data){
         inflater=LayoutInflater.from(context);
@@ -51,4 +58,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             rang = (TextView) itemView.findViewById(R.id.rangRecView);
         }
     }
+
 }

@@ -207,7 +207,6 @@ public class Sport extends AppCompatActivity {
         locMan.removeUpdates(locList);
         Toast t = Toast.makeText(getApplicationContext(), "stoped", Toast.LENGTH_LONG);
         final TextView tvUp = findViewById(R.id.upwardSlope);
-        tvUp.setText("Upward slope");
         t.show();
 
         insertIntoFirebase();

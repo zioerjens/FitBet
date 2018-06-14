@@ -236,7 +236,7 @@ public class Sport extends AppCompatActivity {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public static double getMultiplier(String userId){
+    public static synchronized double getMultiplier(String userId){
         DatabaseReference actualData = FirebaseDatabase.getInstance().getReference("sportler").child(userId);
         actualData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

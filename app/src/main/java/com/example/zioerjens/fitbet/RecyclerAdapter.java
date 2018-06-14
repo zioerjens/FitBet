@@ -9,12 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
     private LayoutInflater inflater;
     List<GruppeDetailUser> data;
+    double multiplikator;
 
     public RecyclerAdapter(Context context, List<GruppeDetailUser> data){
         inflater=LayoutInflater.from(context);
@@ -33,6 +40,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GruppeDetailUser current = data.get(position);
         holder.name.setText(current.user.username);
+        holder.rang.setText(position+1+".");
     }
 
     @Override
@@ -42,10 +50,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView name;
+        TextView rang;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.nameRecView);
+            rang = (TextView) itemView.findViewById(R.id.rangRecView);
         }
     }
+
 }

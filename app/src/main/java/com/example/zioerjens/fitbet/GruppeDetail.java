@@ -2,12 +2,15 @@ package com.example.zioerjens.fitbet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -45,6 +48,7 @@ public class GruppeDetail extends AppCompatActivity {
         databaseGruppeDetail = FirebaseDatabase.getInstance().getReference().child("gruppe_user");
 
 
+
     }
 
     @Override
@@ -76,7 +80,7 @@ public class GruppeDetail extends AppCompatActivity {
 
     public void getDataUserGroup(){
 
-        List<GruppeDetailUser> userGruppe = new ArrayList<>();
+        final List<GruppeDetailUser> userGruppe = new ArrayList<>();
         //users = FirebaseAuth.getInstance().
         for(GruppeDetailUser gdu : gruppeDatailUserList){
             if(gdu.gruppe.name.equals(gruppenName)){
@@ -84,14 +88,81 @@ public class GruppeDetail extends AppCompatActivity {
                 userGruppe.add(gdu);
             }
         }
-        /*gruppeDatailUserList.add(new GruppeDetailUser("Florian"));
-        gruppeDatailUserList.add(new GruppeDetailUser("Sven"));
-        gruppeDatailUserList.add(new GruppeDetailUser("Sven"));*/
+
 
         recyclerView = (RecyclerView) findViewById(R.id.listGroupMember);
         adapter = new RecyclerAdapter(this,userGruppe);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getApplicationContext(),TestJsonParse.class);
+                User selectedUser = gruppeDatailUserList.get(position).user;
+                Snackbar.make(view,selectedUser.username, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                intent.putExtra("userID",selectedUser.userID);
+                intent.putExtra("userName",selectedUser.username);
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Snackbar.make(view, "Drücke kurz auf ein Mitglied, damit du dessen Statistik sehen kannst", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        }));
     }
+    public static interface ClickListener{
+        public void onClick(View view,int position);
+        public void onLongClick(View view,int position);
+    }
+
+    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
+
+        private ClickListener clicklistener;
+        private GestureDetector gestureDetector;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recycleView, final ClickListener clicklistener){
+
+            this.clicklistener=clicklistener;
+            gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child=recycleView.findChildViewUnder(e.getX(),e.getY());
+                    if(child!=null && clicklistener!=null){
+                        clicklistener.onLongClick(child,recycleView.getChildAdapterPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            View child=rv.findChildViewUnder(e.getX(),e.getY());
+            if(child!=null && clicklistener!=null && gestureDetector.onTouchEvent(e)){
+                clicklistener.onClick(child,rv.getChildAdapterPosition(child));
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    }
+
 
 }

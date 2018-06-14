@@ -2,6 +2,7 @@ package com.example.zioerjens.fitbet;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -51,8 +52,9 @@ public class TestJsonParse extends AppCompatActivity {
         JsonAsynch jsonAsynch = new JsonAsynch(url,testA,mDialog);
         jsonAsynch.execute(url);
 
+        Intent intent = getIntent();
 
-
+        setTitle("Statistik von "+ intent.getStringExtra("userName"));
 
         laenderListe = new ArrayAdapter<Land>(this, android.R.layout.simple_list_item_1);
         spieleListe = new ArrayAdapter<Spiele>(this, android.R.layout.simple_list_item_1);
@@ -60,8 +62,8 @@ public class TestJsonParse extends AppCompatActivity {
 
         //Spaghetti could be outsourced
         DatabaseReference statRef = FirebaseDatabase.getInstance().getReference("sportler");
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference actualData = statRef.child(uid);
+        //String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference actualData = statRef.child(intent.getStringExtra("userID"));
 
 
         actualData.addListenerForSingleValueEvent(new ValueEventListener() {

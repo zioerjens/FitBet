@@ -240,8 +240,14 @@ public class Sport extends AppCompatActivity {
         actualData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                SportData sdTemp = dataSnapshot.getValue(SportData.class);
-                multiplikator = sdTemp.multiplier;
+                try {
+                    SportData sdTemp = dataSnapshot.getValue(SportData.class);
+                    multiplikator = sdTemp.multiplier;
+                }
+                catch(NullPointerException e){
+                    multiplikator = 1.0;
+                }
+
             }
 
             @Override

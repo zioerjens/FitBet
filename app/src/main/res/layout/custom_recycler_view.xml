@@ -4,16 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/customRecView"
     android:layout_width="fill_parent"
-
+    android:layout_margin="10dp"
 
     android:layout_height="wrap_content"
 
     >
-
+    <TextView
+        android:id="@+id/rangRecView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:text="1."
+        android:background="@color/colorAccent"/>
     <TextView
         android:id="@+id/nameRecView"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:text="Dummiii" />
 
 

@@ -205,7 +205,6 @@ public class Sport extends AppCompatActivity {
     public void onStopClicked() {
         locMan.removeUpdates(locList);
         Toast t = Toast.makeText(getApplicationContext(), "stoped", Toast.LENGTH_LONG);
-        final TextView tvUp = findViewById(R.id.upwardSlope);
         t.show();
 
         insertIntoFirebase();

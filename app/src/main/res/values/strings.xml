@@ -14,6 +14,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Flo's Strings -->
     <string name="uebTipp">Dein Tipp</string>
     <string name="txtPoints">Points</string>
     <string name="txtResTippR">Richtig getippt</string>
@@ -59,7 +61,9 @@
     <string name="titelActJoinGr">Gruppe beitreten</string>
     <string name="tippen">tippen</string>
 
-    <!-- Strings related to Tippen -->
+    <!-- Strings related to tippen -->
     <string name="successfulTipp">Tipp erfolgreich hinzugefügt</string>
     <string name="gameNotReady">Es kann nicht auf ein Spiel getippt werden, wenn die Teams noch nicht feststehen</string>
+    <string name="fillBothTippFields">Es müssen beide Eingabefelder ausgefüllt sein, damit ein Tipp hinzugefügt werden kann</string>
+    <string name="updatedTipp">Der vorherige Tipp wurde überschrieben</string>
 </resources>

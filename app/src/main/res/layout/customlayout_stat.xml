@@ -123,6 +123,25 @@
                     android:background="@drawable/rounded_border" />
 
                 <TextView
+                    android:id="@+id/homeTipp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="33dp"
+                    android:text="-"
+                    android:textColor="@color/backStat" />
+
+                <TextView
+                    android:id="@+id/awayTipp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/view4"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="33dp"
+                    android:text="-"
+                    android:textColor="@color/backStat" />
+
+                <TextView
                     android:id="@+id/uebTipp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

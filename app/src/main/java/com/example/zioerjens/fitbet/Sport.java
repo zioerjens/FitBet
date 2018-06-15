@@ -221,7 +221,7 @@ public class Sport extends AppCompatActivity {
     //stops gps tracking and inserts data into firebase
     public void onStopClicked() {
         locMan.removeUpdates(locList);
-        Toast t = Toast.makeText(getApplicationContext(), "stoped", Toast.LENGTH_LONG);
+        Toast t = Toast.makeText(getApplicationContext(), "stopped", Toast.LENGTH_LONG);
         t.show();
         insertIntoFirebase();
     }

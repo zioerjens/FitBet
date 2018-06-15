@@ -9,6 +9,8 @@ public class TippUser {
     public Tipp tipp;
     public User user;
 
+    public TippUser(){}
+
     public TippUser(Tipp tipp, User user) {
         this.tipp = tipp;
         this.user = user;

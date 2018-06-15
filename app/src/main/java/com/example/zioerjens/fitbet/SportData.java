@@ -1,7 +1,9 @@
 package com.example.zioerjens.fitbet;
 
+//Format for saving Data in Firebase
 public class SportData {
 
+    //public variables due to testing
     public double distance;
     public double multiplier;
     public int counter;

@@ -20,17 +20,22 @@ public class OnSpielClickListener implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(activity,Tippen.class);
         Spiele selected = (Spiele) parent.getItemAtPosition(position);
+        if (selected.landHome != null && selected.landAway != null) {
 
-        intent.putExtra("land1Name",selected.landHome.getLandName());
-        intent.putExtra("land1Icon",selected.landHome.getEmojiString());
-        intent.putExtra("land2Name",selected.landAway.getLandName());
-        intent.putExtra("land2Icon",selected.landAway.getEmojiString());
-        intent.putExtra("homeScore",selected.homeResult);
-        intent.putExtra("awayScore",selected.awayResult);
-        intent.putExtra("spielName",selected.spielName);
+            Intent intent = new Intent(activity, Tippen.class);
+            intent.putExtra("land1Name", selected.landHome.getLandName());
+            intent.putExtra("land1Icon", selected.landHome.getEmojiString());
+            intent.putExtra("land2Name", selected.landAway.getLandName());
+            intent.putExtra("land2Icon", selected.landAway.getEmojiString());
+            intent.putExtra("homeScore", selected.homeResult);
+            intent.putExtra("awayScore", selected.awayResult);
+            intent.putExtra("spielName", selected.spielName);
 
-        activity.startActivity(intent);
+            activity.startActivity(intent);
+        } else {
+
+            Toast.makeText(activity,R.string.gameNotReady,Toast.LENGTH_SHORT).show();
+        }
     }
 }

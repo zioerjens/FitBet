@@ -84,18 +84,21 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tippHome"/>
+                    android:id="@+id/tippHome"
+                    android:inputType="number"/>
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tippAway"/>
+                    android:id="@+id/tippAway"
+                    android:inputType="number"/>
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tippen"
                     android:id="@+id/submitTipp"/>
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

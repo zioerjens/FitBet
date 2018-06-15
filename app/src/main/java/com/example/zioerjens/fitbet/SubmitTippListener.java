@@ -2,6 +2,7 @@ package com.example.zioerjens.fitbet;
 
 import android.content.DialogInterface;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,5 +28,6 @@ public class SubmitTippListener implements View.OnClickListener {
         DatabaseReference ref = db.getReference("tipp_user");
         DatabaseReference ref2 = ref.push();
         ref2.setValue(new TippUser(new Tipp(tippHome,tippAway,spielName),new User(currentUser.getDisplayName(), currentUser.getUid(), currentUser.getEmail())));
+        Toast.makeText(activity,R.string.successfulTipp,Toast.LENGTH_SHORT).show();
     }
 }

@@ -2,11 +2,11 @@ package com.example.zioerjens.fitbet;
 
 public class SportData {
 
-    double distance;
-    double multiplier;
-    int counter;
-    String uid;
-    double altitude;
+    public double distance;
+    public double multiplier;
+    public int counter;
+    public String uid;
+    public double altitude;
 
     public SportData(){
 

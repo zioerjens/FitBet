@@ -35,6 +35,11 @@ public class GruppeDetail extends AppCompatActivity {
     private FirebaseUser user;
     Intent intent;
 
+    /**
+     * Setzten des Titels
+     * Zugreifen auf Firebase-Objekt "gruppe_user"
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,10 @@ public class GruppeDetail extends AppCompatActivity {
 
     }
 
+    /**
+     * Auslesen der Firebasedaten.
+     * Jedes Objekt von Firebase wird als GruppeDetailUser-Objekt in die Liste gruppenDetailUserList gespeichert
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -62,10 +71,10 @@ public class GruppeDetail extends AppCompatActivity {
                 gruppeDatailUserList.clear();
 
                 for(DataSnapshot grSnapshot : dataSnapshot.getChildren()) {
-                    // Get Post object and use the values to update the UI
-                    GruppeDetailUser post = grSnapshot.getValue(GruppeDetailUser.class);
+                    // Get GruppeDetailUser object and use the values to update the UI
+                    GruppeDetailUser gdu = grSnapshot.getValue(GruppeDetailUser.class);
                     // [START_EXCLUDE]
-                    gruppeDatailUserList.add(post);
+                    gruppeDatailUserList.add(gdu);
                 }
                 getDataUserGroup();
             }
@@ -79,35 +88,45 @@ public class GruppeDetail extends AppCompatActivity {
 
     }
 
+    /**
+     *Listet alle User einer Gruppe auf.
+     */
     public void getDataUserGroup(){
 
-        final List<GruppeDetailUser> userGruppe = new ArrayList<>();
-        //users = FirebaseAuth.getInstance().
-        for(GruppeDetailUser gdu : gruppeDatailUserList){
-            if(gdu.gruppe.name.equals(gruppenName)){
-                //gdu.userID=user.
-                userGruppe.add(gdu);
-            }
-        }
 
+        final List<GruppeDetailUser> userGruppe = userIngroup();
 
+        //recycler View wird gefüllt und jedem Item wird ein TouchListener hinzugefügt
         recyclerView = (RecyclerView) findViewById(R.id.listGroupMember);
         adapter = new RecyclerAdapter(this,userGruppe);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
+
+            /**
+             * Wird ausgeführt, wenn kurz auf ein Item gecklickt wird
+             *
+             * @param view Aktuelles view
+             * @param position Stelle an dem gedrückt wurde
+             */
             @Override
             public void onClick(View view, int position) {
                 intent = new Intent(getApplicationContext(),TestJsonParse.class);
                 User selectedUser = userGruppe.get(position).user;
-                Snackbar.make(view,selectedUser.username, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view,selectedUser.username, Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 intent.putExtra("userID",selectedUser.userID);
                 intent.putExtra("userName",selectedUser.username);
 
+                //Neue Aktivität wird gestartet
                 startActivity(intent);
             }
 
+            /**
+             * Wird ausgeführt, wenn lange auf ein Item gecklickt wird
+             *
+             * @param view Aktuelle View
+             * @param position Stelle an dem gedrückt wurde
+             */
             @Override
             public void onLongClick(View view, int position) {
                 Snackbar.make(view, "Drücke kurz auf ein Mitglied, damit du dessen Statistik sehen kannst", Snackbar.LENGTH_LONG)
@@ -115,10 +134,18 @@ public class GruppeDetail extends AppCompatActivity {
             }
         }));
     }
+
+    /**
+     * Clicklistener Interface wird für den TouchListener benötigt
+     */
     public static interface ClickListener{
         public void onClick(View view,int position);
         public void onLongClick(View view,int position);
     }
+
+    /**
+     * Wird für den Touchlistener benötigt, erkennt die Gesten
+     */
 
     class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
 
@@ -165,6 +192,22 @@ public class GruppeDetail extends AppCompatActivity {
         }
 
 
+    }
+
+    /**
+     * Filtert aus allen Objekten die benötigten raus (Die die in dieser Gruppe sind)
+     * @return List<GruppeDetailUser> alle user einer Gruppe sind in dieser Liste
+     */
+    public List<GruppeDetailUser> userIngroup(){
+        final List<GruppeDetailUser> userGruppe = new ArrayList<>();
+        //users = FirebaseAuth.getInstance().
+        for(GruppeDetailUser gdu : gruppeDatailUserList){
+            if(gdu.gruppe.name.equals(gruppenName)){
+                //gdu.userID=user.
+                userGruppe.add(gdu);
+            }
+        }
+        return userGruppe;
     }
 
 

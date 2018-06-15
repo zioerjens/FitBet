@@ -25,12 +25,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-
+//class handling GPS tracking and the whole sports activity
+//needs gps and internet connection rights in general
 public class Sport extends AppCompatActivity {
 
-    public LocationManager locMan;
+    private LocationManager locMan;
     private LocationListener locList;
-    public Location tempLoc = null;
+    private Location tempLoc = null;
     private double distance;
     private double alti;
     private double multiplier;
@@ -41,8 +42,10 @@ public class Sport extends AppCompatActivity {
     private DatabaseReference sportRef;
     private SportData sd;
 
+    //for static getMulitplier, not finished yet
     private static volatile double multiplikator;
 
+    //fills Text in and adds button listeners
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +67,15 @@ public class Sport extends AppCompatActivity {
         });
     }
 
+    //handles gps
+    //loads data from firebase
     @Override
     protected void onResume() {
         super.onResume();
         checkLocPermission();
         registerGPS();
         getAcc();
+        //initialise Firebase reference
         sportRef = FirebaseDatabase.getInstance().getReference("sportler");
 
         loadFromFirebase();
@@ -81,12 +87,14 @@ public class Sport extends AppCompatActivity {
         super.onPause();
     }
 
+    //failsaves the data gathered
     @Override
     protected void onDestroy(){
         insertIntoFirebase();
         super.onDestroy();
     }
 
+    //handling the permission
     private void checkLocPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -98,12 +106,14 @@ public class Sport extends AppCompatActivity {
         }
     }
 
+    //initialising the gps service
     private void registerGPS() {
         locMan = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         locList = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                //calculation of distance walked
                 if (tempLoc.getLatitude() != 0.0 && tempLoc.getLongitude() != 0.0 && tempLoc != null) {
                     distance += location.distanceTo(tempLoc);
                     if (location.getAltitude() > tempLoc.getAltitude()) {
@@ -111,6 +121,7 @@ public class Sport extends AppCompatActivity {
                     }
                 }
                 tempLoc = location;
+                //shows the information gathered in the GUI
                 calcMultiplier();
                 fillTextviews();
             }
@@ -130,6 +141,7 @@ public class Sport extends AppCompatActivity {
         };
     }
 
+    //calculates the multiplier and handles the progressbar
     private void calcMultiplier() {
         int requirement = 50;
         double delta = distance - (counter * requirement);
@@ -146,12 +158,14 @@ public class Sport extends AppCompatActivity {
 
     }
 
+    //outsourced progressbarhandling
     private void setProgress(double progress) {
         ProgressBar p = findViewById(R.id.distanceProgressBar);
         actualProgress = (int) (100 * progress);
         p.setProgress(actualProgress);
     }
 
+    //filling the data into the GUI-TextViews
     private void fillTextviews() {
         DecimalFormat df = new DecimalFormat("#.####");
         df.setRoundingMode(RoundingMode.CEILING);
@@ -165,12 +179,13 @@ public class Sport extends AppCompatActivity {
         DecimalFormat mdf = new DecimalFormat("#.#");
         mdf.setRoundingMode(RoundingMode.CEILING);
 
+        calcMultiplier();
+
         final TextView tvMultiplier = findViewById(R.id.multiplicatorScore);
         tvMultiplier.setText(mdf.format(multiplier));
-
-        calcMultiplier();
     }
 
+    //loading the data from firebase or initialising the standard-values
     private void fillData() {
         if (sd != null) {
             this.multiplier = sd.multiplier;
@@ -187,6 +202,7 @@ public class Sport extends AppCompatActivity {
         }
     }
 
+    //starts gps tracking
     public void onStartClicked() {
         try {
             locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, locList);
@@ -199,18 +215,18 @@ public class Sport extends AppCompatActivity {
         Toast t = Toast.makeText(getApplicationContext(), "started", Toast.LENGTH_LONG);
 
         t.show();
-        fillTextviews();
+        //fillTextviews();
     }
 
+    //stops gps tracking and inserts data into firebase
     public void onStopClicked() {
         locMan.removeUpdates(locList);
         Toast t = Toast.makeText(getApplicationContext(), "stoped", Toast.LENGTH_LONG);
-        final TextView tvUp = findViewById(R.id.upwardSlope);
         t.show();
-
         insertIntoFirebase();
     }
 
+    //saving instance data into firebase
     public void insertIntoFirebase() {
         sportRef.child(uid).setValue(new SportData(distance, multiplier, counter, alti));
     }
@@ -232,10 +248,14 @@ public class Sport extends AppCompatActivity {
         });
     }
 
+    //sets instancevariable uid to auth user
     public void getAcc() {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
+    //trying to pass multiplier for other classes
+    //not working yet, which is the reason for Deprecated
+    @Deprecated
     public static synchronized double getMultiplier(String userId){
         DatabaseReference actualData = FirebaseDatabase.getInstance().getReference("sportler").child(userId);
         actualData.addListenerForSingleValueEvent(new ValueEventListener() {

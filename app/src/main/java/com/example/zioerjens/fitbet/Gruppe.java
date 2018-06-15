@@ -1,5 +1,6 @@
 package com.example.zioerjens.fitbet;
 
+//Dient dem Einspeichern in die Datenbank
 public class Gruppe {
 
     public String name;

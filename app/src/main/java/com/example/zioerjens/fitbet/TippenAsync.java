@@ -28,6 +28,11 @@ import java.util.List;
 public class TippenAsync extends AsyncTask<String,String,String> {
 
 
+    //EINE ALTE VERSION DER KLASSE, DIE FÜR DIE FRAGMENTE IN DER TIPPEN_SPIELAUSWAHL JEDOCH NOCH INTERSSANT SEIN KÖNNTE
+    //CODE NICHT LÖSCHEN, WIRD IN SPÄTEREN VERSIONEN DER APP NOCH VERWENDET!
+
+    //EINE VERGLEICHBARE KLASSE, DIE MOMENTAN ANSTELLE DIESER VERWENDET WIRD IST JsonAsyncTippen.
+
     private Tippen_spielauswahlDate dateAct;
     private String url2;
     private ProgressDialog mDialog;

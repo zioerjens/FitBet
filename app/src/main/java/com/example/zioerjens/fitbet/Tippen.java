@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 public class Tippen extends AppCompatActivity {
 
-    private Spiele currentGame;
-    private AlleLaender alleLaender;
     private TextView land1Name;
     private TextView land1Icon;
     private TextView land2Name;

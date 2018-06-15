@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+//Dient dem Öffnen des Intents zum Tippen, wenn auf ein Spiel in der Liste geklickt wurde.
 public class OnSpielClickListener implements AdapterView.OnItemClickListener {
 
     private TippenAllGames activity;
@@ -20,17 +21,25 @@ public class OnSpielClickListener implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(activity,Tippen.class);
         Spiele selected = (Spiele) parent.getItemAtPosition(position);
 
-        intent.putExtra("land1Name",selected.landHome.getLandName());
-        intent.putExtra("land1Icon",selected.landHome.getEmojiString());
-        intent.putExtra("land2Name",selected.landAway.getLandName());
-        intent.putExtra("land2Icon",selected.landAway.getEmojiString());
-        intent.putExtra("homeScore",selected.homeResult);
-        intent.putExtra("awayScore",selected.awayResult);
-        intent.putExtra("spielName",selected.spielName);
+        //Überprüfen, ob die Teams für das Spiel bereits feststehen.
+        if (selected.landHome != null && selected.landAway != null) {
 
-        activity.startActivity(intent);
+            //Werte können nicht als Objekte Übertragen werden, deswegen werden sie hier alle einzeln Übertragen.
+            Intent intent = new Intent(activity, Tippen.class);
+            intent.putExtra("land1Name", selected.landHome.getLandName());
+            intent.putExtra("land1Icon", selected.landHome.getEmojiString());
+            intent.putExtra("land2Name", selected.landAway.getLandName());
+            intent.putExtra("land2Icon", selected.landAway.getEmojiString());
+            intent.putExtra("homeScore", selected.homeResult);
+            intent.putExtra("awayScore", selected.awayResult);
+            intent.putExtra("spielName", selected.spielName);
+
+            activity.startActivity(intent);
+        } else {
+
+            Toast.makeText(activity,R.string.gameNotReady,Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.zioerjens.fitbet;
 
+//Dient dem Einspeichern in die Datenbank
 public class Gruppe_User {
     public Gruppe gruppe;
     public User user;

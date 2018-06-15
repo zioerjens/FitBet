@@ -58,4 +58,8 @@
     <string name="distanceAmmount">"0</string>
     <string name="titelActJoinGr">Gruppe beitreten</string>
     <string name="tippen">tippen</string>
+
+    <!-- Strings related to Tippen -->
+    <string name="successfulTipp">Tipp erfolgreich hinzugefügt</string>
+    <string name="gameNotReady">Es kann nicht auf ein Spiel getippt werden, wenn die Teams noch nicht feststehen</string>
 </resources>

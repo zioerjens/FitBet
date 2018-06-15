@@ -1,5 +1,7 @@
 package com.example.zioerjens.fitbet;
 
+//Klasse, die für die Speicherung in die Datenbank verwendet wird.
+
 public class User {
     public String username;
     public String userID;

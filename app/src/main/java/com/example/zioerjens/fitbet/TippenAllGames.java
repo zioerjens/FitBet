@@ -23,6 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+//Vorübergehend dieselbe Klasse wie TestJsonParse, nur wird der AsyncTask TippenAsync gestartet.
+//Diese Klasse soll noch so angepasst werden, dass sie den Mockups zu Ähneln beginnt.
+
 public class TippenAllGames extends AppCompatActivity {
 
     private String url = "https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json";

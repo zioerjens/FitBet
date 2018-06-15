@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+//Wird ausgeführt, wenn auf ein Spiel getippt wird.
 public class SubmitTippListener implements View.OnClickListener {
 
     private Tippen activity;
@@ -21,6 +22,7 @@ public class SubmitTippListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        //Speichert den Tipp in die FirebaseDatabase
         String tippHome = activity.getTippHome().getText().toString();
         String tippAway = activity.getTippAway().getText().toString();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();

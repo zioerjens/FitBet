@@ -92,6 +92,7 @@ public class tippen_Spielauswahl extends AppCompatActivity {
             super(fm);
         }
 
+        //Einfügen der 3 Fragments, je nach Tab in welchem man sich gerade bedindet.
         @Override
         public Fragment getItem(int position) {
             switch (position){

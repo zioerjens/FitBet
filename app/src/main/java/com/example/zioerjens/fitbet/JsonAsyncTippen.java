@@ -62,17 +62,13 @@ public class JsonAsyncTippen extends AsyncTask<String,String,String> {
     private Spiele spiel;
     private Land land;
 
-
-
-
-
-
     public JsonAsyncTippen(String url, TippenAllGames teamAct, ProgressDialog mDialog){
         this.url2 = url;
         this.teamAct = teamAct;
         this.mDialog = mDialog;
     }
 
+    //Holt das JSON im Hintergrund
     @Override
     protected String doInBackground(String... badi) {
         StringBuilder msg = new StringBuilder();
@@ -101,6 +97,8 @@ public class JsonAsyncTippen extends AsyncTask<String,String,String> {
         }
         return msg.toString();
     }
+
+    //Wenn das JSON vorhanden ist, wird es verarbeitet und die Listener werden hinzugefügt
     protected void onPostExecute(String result) {
 
         alleLaender = new ArrayList<>();
@@ -109,6 +107,7 @@ public class JsonAsyncTippen extends AsyncTask<String,String,String> {
         listView = (ListView) teamAct.findViewById(R.id.spielL);
         listView.setOnItemClickListener(new OnSpielClickListener(teamAct,alleLaender));
     }
+
     //Liest die Länder aus dem JSON und speichert diese als Land-Objekt Arryadapter
     public void parseJsonLoadLand(String jsonstring){
         laenderListe = teamAct.getLaenderListe();
@@ -199,8 +198,8 @@ public class JsonAsyncTippen extends AsyncTask<String,String,String> {
                         awayPenalty = subSubObj.getString("away_penalty");
                         winner = subSubObj.getString("winner");
                         spiel = new Spiele(homeTeam, awayTeam, homeResult, awayResult ,homePenalty, awayPenalty,spielName,winner,teamAct);
-                        spieleListe.add(spiel);
-                        spieleList.add(spiel);
+                        spieleListe.add(spiel); //ArrayAdapter
+                        spieleList.add(spiel); //ArrayList
                     }
                 }
                 //Restliche Knockoutspiele
@@ -217,8 +216,8 @@ public class JsonAsyncTippen extends AsyncTask<String,String,String> {
                         winner = subSubObj.getString("winner");
                         selectWinner(spieleList);
                         spiel = new Spiele(homeTeam, awayTeam, homeResult, awayResult ,homePenalty, awayPenalty,spielName,winner,teamAct);
-                        spieleListe.add(spiel);
-                        spieleList.add(spiel);
+                        spieleListe.add(spiel); //ArrayAdapter
+                        spieleList.add(spiel); //ArrayList
                     }
                 }
             }

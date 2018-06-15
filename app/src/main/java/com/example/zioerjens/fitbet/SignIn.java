@@ -64,11 +64,12 @@ public class SignIn extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser account){
-        //TODO change UI according to the logged in user - if user is not logged in, account returns null
+        //Setting Login-Screen, when the User is not logged in. Else forward the user to the Home-Screen.
         if (account == null){
             // Set the dimensions of the sign-in button.
             SignInButton signInButton = findViewById(R.id.signInButton);
             signInButton.setSize(SignInButton.SIZE_WIDE);
+            //Der SignInListener leitet weiter zu der Funktion signIn(), die sich weiter unten in dieser Klasse befindet.
             signInButton.setOnClickListener(new SignInListener(this));
         } else {
             Account.setAccount(account);
@@ -79,6 +80,34 @@ public class SignIn extends AppCompatActivity {
         }
     }
 
+    //Starts the GoogleSignInIntent
+    public void signIn(){
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent,0);
+    }
+
+    //Is active, when the Intent form GoogleSignInClient.getSignInIntent is closed.
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == 0) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener. Also, it is only one activity from which you can sign in,
+            // that's why the requestCode is hardcoded here.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                updateUI(null);
+            }
+        }
+    }
+
+    //meldet den Benutzer nachdem er bei Google angemeldet wurde auch noch bei Firebase an
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d("firebaseAuthWithGoogle", "firebaseAuthWithGoogle:" + acct.getId());
         Log.e("sven","authwithgoogle-!-");
@@ -98,53 +127,7 @@ public class SignIn extends AppCompatActivity {
                             Log.w("firebaseAuthWithGoogle", "signInWithCredential:failure", task.getException());
                             updateUI(null);
                         }
-
-                        // ...
                     }
                 });
     }
-
-
-    public void signIn(){
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent,0);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == 0) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener. Also, it is only one activity from which you can sign in,
-            // that's why the requestCode is hardcoded here.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                // ...
-            }
-            //handleSignInResult(task);
-        }
-    }
-
-    /*
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            // Signed in successfully, show authenticated UI.
-            updateUI(account);
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("SignIn", "signInResult:failed code=" + e.getStatusCode());
-            updateUI(null);
-        }
-    }
-    */
 }

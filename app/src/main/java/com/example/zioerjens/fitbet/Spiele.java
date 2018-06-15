@@ -4,6 +4,7 @@ import android.widget.ArrayAdapter;
 
 import java.io.Serializable;
 
+//Objekt mit Instanzvariabeln und vielen verschiedenen Konstruktoren, für alle verschiedenen Anwendungsfälle
 public class Spiele implements Serializable {
     String spielName;
     String spielType;
@@ -80,6 +81,8 @@ public class Spiele implements Serializable {
         }
     }
 
+    //Der obere Konstruktor wurde wiederholt, jedoch mit einer anderen Activity, die mitgegeben wird.
+
     public Spiele(String homeTeam, String awayTeam, String homeResult, String awayResult, String spielName, TippenAllGames act){
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -128,6 +131,8 @@ public class Spiele implements Serializable {
         }
 
     }
+
+    //Der obere Konstruktor wurde wiederholt, jedoch mit einer anderen Activity, die mitgegeben wird.
 
     public Spiele(String homeTeam, String awayTeam, String homeResult, String awayResult, String homePenalty, String awayPenalty, String spielName, String winner, TippenAllGames act){
         this.homeTeam = homeTeam;

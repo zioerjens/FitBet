@@ -70,6 +70,7 @@ public class Home extends AppCompatActivity {
         });
     }
 
+    //Leitet zu der Login-Activity weiter, wenn der Benutzer nicht angemeldet ist.
     private void checkLoggedIn(){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() == null){
@@ -79,7 +80,9 @@ public class Home extends AppCompatActivity {
         }
     }
 
+    //Meldet den Benutzer ab
     private void signOut(){
+        //Der Google-Account wird abgemeldet
         Toast.makeText(this,"Successfully logged out!", Toast.LENGTH_SHORT).show();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -88,10 +91,13 @@ public class Home extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        //Nachdem der Google-Account abgemeldet wurde wird auch noch der FirebaseUser abgemeldet
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         mAuth.signOut();
+                        //Es wird zum Login weitergeleitet
                         Intent intent = new Intent(getApplicationContext(),SignIn.class);
                         startActivity(intent);
+                        //Activity wird geschlossen
                         finish();
                     }
                 });

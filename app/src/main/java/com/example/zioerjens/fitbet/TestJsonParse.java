@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,14 +41,16 @@ public class TestJsonParse extends AppCompatActivity {
     private SportData data;
 
 
-
-
+    /**
+     * Anzeigen der Statistik
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_json_parse);
 
-        mDialog = ProgressDialog.show(this, "Lade BadiInfos", "Funfact:\nDini Mueter isch fett!");
+        mDialog = ProgressDialog.show(this, "Lade Infos", "Funfact:\nDini Mueter isch natürlech nid fett!");
 
         JsonAsynch jsonAsynch = new JsonAsynch(url,testA,mDialog);
         jsonAsynch.execute(url);
@@ -62,10 +65,13 @@ public class TestJsonParse extends AppCompatActivity {
 
         //Spaghetti could be outsourced
         DatabaseReference statRef = FirebaseDatabase.getInstance().getReference("sportler");
-        //String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        //Die Daten des ausgewählten Spielers
         DatabaseReference actualData = statRef.child(intent.getStringExtra("userID"));
 
-
+        /**
+         * Multiplikator wird dargestellt.
+         */
         actualData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -81,8 +87,11 @@ public class TestJsonParse extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-    }
 
+
+
+
+    }
 
 
 

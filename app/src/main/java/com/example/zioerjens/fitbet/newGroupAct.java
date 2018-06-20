@@ -8,6 +8,11 @@ import android.view.WindowManager;
 
 public class newGroupAct extends AppCompatActivity {
 
+    /**
+     * überflüssig
+     * @param savedInstanceState
+     *
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,5 +27,5 @@ public class newGroupAct extends AppCompatActivity {
         getWindow().setLayout((int)(width*0.8),(int)(length*0.4));
 
 
-    }
+    }*/
 }

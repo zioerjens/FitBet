@@ -14,9 +14,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/fitbet"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/fitbet"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
@@ -30,7 +30,8 @@
         <activity
             android:name=".TestJsonParse"
             android:label="@string/titelStat"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
         <activity
             android:name=".tippen_Spielauswahl"
             android:label="@string/title_activity_tippen__spielauswahl"
@@ -55,11 +56,12 @@
         <activity
             android:name=".Tippen"
             android:screenOrientation="portrait"/>
-        <activity android:name=".TippenAllGames"></activity>
+        <activity android:name=".TippenAllGames"
             android:screenOrientation="portrait" />
         <activity
             android:name=".GruppeDetail"
-            android:label=""/>
+            android:label=""
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

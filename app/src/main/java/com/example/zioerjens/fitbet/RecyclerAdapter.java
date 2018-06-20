@@ -17,6 +17,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+/**
+ * Adapter für die RecycleView
+ */
+
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
     private LayoutInflater inflater;
@@ -36,6 +40,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return holder;
     }
 
+    /**
+     * Setzt den Namen und Rang in der GruppenDetailAnsicht
+     * @param holder
+     * @param position Aktuelle Position in der Liste
+     */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GruppeDetailUser current = data.get(position);

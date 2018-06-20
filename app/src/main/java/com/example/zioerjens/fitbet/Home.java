@@ -18,7 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Home extends AppCompatActivity {
 
 
-
+    /**
+     * Home Activity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,6 +34,7 @@ public class Home extends AppCompatActivity {
         final Button buttonStat = findViewById(R.id.btnStatistik);
         buttonStat.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //Bei der Statistikaktivität soll der eingeloggte User angezeigt werden
                 Intent intent = new Intent(getApplicationContext(),TestJsonParse.class);
                 intent.putExtra("userID",FirebaseAuth.getInstance().getCurrentUser().getUid());
                 intent.putExtra("userName",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());

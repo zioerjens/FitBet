@@ -71,7 +71,7 @@ public class SpieleAdapter extends ArrayAdapter<Spiele> {
         awayTipp = (TextView) listItem.findViewById(R.id.awayTipp);
         Log.e("DAVOR", currentSpiel.spielName);
 
-        Boolean finished = fillTipps(currentSpiel.spielName, homeTipp, awayTipp);
+        fillTipps(currentSpiel.spielName, homeTipp, awayTipp);
 
         //Inhalt der Spiel Klasse wird gesetzt
         team.setText(currentSpiel.homeTeam);
@@ -79,13 +79,6 @@ public class SpieleAdapter extends ArrayAdapter<Spiele> {
         res1.setText(currentSpiel.homeResult);
         res2.setText(currentSpiel.awayResult);
 
-        while (!finished){
-            try {
-                Thread.sleep(10);
-            } catch (Exception e){
-                //do nothing
-            }
-        }
         return listItem;
     }
 
